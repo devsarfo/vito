@@ -104,7 +104,7 @@ service nginx start
 apt install redis-server -y
 
 # php
-export V_PHP_VERSION="8.1"
+export V_PHP_VERSION="8.2"
 add-apt-repository ppa:ondrej/php -y
 apt update
 apt install -y php${V_PHP_VERSION} php${V_PHP_VERSION}-fpm php${V_PHP_VERSION}-mbstring php${V_PHP_VERSION}-mysql php${V_PHP_VERSION}-mcrypt php${V_PHP_VERSION}-gd php${V_PHP_VERSION}-xml php${V_PHP_VERSION}-curl php${V_PHP_VERSION}-gettext php${V_PHP_VERSION}-zip php${V_PHP_VERSION}-bcmath php${V_PHP_VERSION}-soap php${V_PHP_VERSION}-redis
