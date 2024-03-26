@@ -141,6 +141,7 @@ mysql -e "FLUSH PRIVILEGES"
 export V_SSL=${V_SSL:-1}
 export COMPOSER_ALLOW_SUPERUSER=1
 export V_REPO="https://github.com/vitodeploy/vito.git"
+export V_REPO_BRANCH="0.x"
 export V_VHOST_CONFIG="
 server {
     listen 80;
@@ -184,7 +185,7 @@ ln -s /etc/nginx/sites-available/${V_DOMAIN} /etc/nginx/sites-enabled/
 service nginx restart
 rm -rf /home/${V_USERNAME}/${V_DOMAIN}
 git config --global core.fileMode false
-git clone ${V_REPO} /home/${V_USERNAME}/${V_DOMAIN}
+git clone ${V_REPO} -b ${V_REPO_BRANCH} /home/${V_USERNAME}/${V_DOMAIN}
 find /home/${V_USERNAME}/${V_DOMAIN} -type d -exec chmod 755 {} \;
 find /home/${V_USERNAME}/${V_DOMAIN} -type f -exec chmod 644 {} \;
 cd /home/${V_USERNAME}/${V_DOMAIN} && git config core.fileMode false
