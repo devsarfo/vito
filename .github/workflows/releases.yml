@@ -109,15 +109,11 @@ jobs:
 
       - name: Send release notes to Discord
         run: |
-          echo "${{ steps.fetch-release.outputs.notes }}" > release_notes.txt
-
-          jq -Rs --arg version "${{ steps.version.outputs.version }}" '
-            { content: "**VitoDeploy \($version)** is out! 🎉🚀\n\n```markdown\n" + . + "\n```" }
-          ' < release_notes.txt > payload.json
-
           curl -H "Content-Type: application/json" \
             -X POST \
-            -d @payload.json \
+            -d "$(jq -Rs --arg version "${{ steps.version.outputs.version }}" '
+              { content: "**VitoDeploy \($version)** is out! 🎉🚀\n\n" + . }
+            ' <<< "${{ steps.fetch-release.outputs.notes }}")" \
             "$DISCORD_WEBHOOK_URL"
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
