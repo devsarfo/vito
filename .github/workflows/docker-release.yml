@@ -6,11 +6,25 @@ on:
     types: [created]
 
 jobs:
-  determine-tags:
-    runs-on: ubuntu-24.04
-    outputs:
-      tags: ${{ steps.meta.outputs.tags }}
+  build-and-push:
+    runs-on: ubuntu-24.04-arm
+
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Determine Docker tags
         id: meta
         env:
@@ -48,73 +62,12 @@ jobs:
 
           echo "tags=$TAGS" >> "$GITHUB_OUTPUT"
 
-  build-amd64:
-    runs-on: ubuntu-24.04
-    needs: determine-tags
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@v6
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and push amd64 images
-        run: |
-          IFS=',' read -ra TAG_ARRAY <<< "${{ needs.determine-tags.outputs.tags }}"
-          TAGS=""
-          for TAG in "${TAG_ARRAY[@]}"; do
-            TAGS="$TAGS --tag ${TAG}-amd64"
-          done
-
-          docker buildx build . \
-            -f docker/Dockerfile \
-            --platform linux/amd64 \
-            --push \
-            $TAGS
-
-  build-arm64:
-    runs-on: ubuntu-24.04-arm
-    needs: determine-tags
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build and push arm64 images
-        run: |
-          IFS=',' read -ra TAG_ARRAY <<< "${{ needs.determine-tags.outputs.tags }}"
-          TAGS=""
-          for TAG in "${TAG_ARRAY[@]}"; do
-            TAGS="$TAGS --tag ${TAG}-arm64"
-          done
-
-          docker buildx build . \
-            -f docker/Dockerfile \
-            --platform linux/arm64 \
-            --push \
-            $TAGS
-
-  push-manifest:
-    runs-on: ubuntu-24.04
-    needs: [build-amd64, build-arm64, determine-tags]
-    steps:
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Create and push multi-arch manifest
-        run: |
-          IFS=',' read -ra TAG_ARRAY <<< "${{ needs.determine-tags.outputs.tags }}"
-
-          for TAG in "${TAG_ARRAY[@]}"; do
-            echo "Creating manifest for $TAG"
-            docker manifest create "$TAG" \
-              --amend "${TAG}-amd64" \
-              --amend "${TAG}-arm64"
-
-            docker manifest push "$TAG"
-          done
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          no-cache: true
+          tags: ${{ steps.meta.outputs.tags }}
