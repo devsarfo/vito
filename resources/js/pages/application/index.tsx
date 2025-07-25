@@ -1,6 +1,5 @@
 import { usePage } from '@inertiajs/react';
 import { Site } from '@/types/site';
-import React from 'react';
 import AppWithDeployment from '@/pages/application/components/app-with-deployment';
 import LoadBalancer from '@/pages/application/components/load-balancer';
 import siteHelper from '@/lib/site-helper';
