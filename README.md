@@ -14,7 +14,7 @@ production servers without a hassle.
 
 ## Quick Start
 
-Version 3 (Alpha):
+Version 3 (Beta):
 
 ```sh
 bash <(curl -Ls https://raw.githubusercontent.com/vitodeploy/vito/3.x/scripts/install.sh)
