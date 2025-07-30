@@ -27,6 +27,14 @@ class NodeJS extends AbstractService
     public function creationRules(array $input): array
     {
         return [
+            'type' => [
+                function (string $attribute, mixed $value, Closure $fail): void {
+                    $exists = $this->service->server->nodejs();
+                    if ($exists) {
+                        $fail('You already have nodejs installed on the server.');
+                    }
+                },
+            ],
             'version' => [
                 'required',
                 Rule::in(config('service.services.nodejs.versions')),
@@ -73,6 +81,11 @@ class NodeJS extends AbstractService
      */
     public function uninstall(): void
     {
+        // skip uninstalling if there are other NodeJS services installed
+        // to keep it compatible with the previous approach with nvm
+        if ($this->service->server->services()->where('type', 'nodejs')->count() > 1) {
+            return;
+        }
         $this->service->server->ssh()->exec(
             view('ssh.services.nodejs.uninstall-nodejs', [
                 'version' => $this->service->version,
@@ -81,18 +94,5 @@ class NodeJS extends AbstractService
             'uninstall-nodejs-'.$this->service->version
         );
         $this->service->server->os()->cleanup();
-    }
-
-    /**
-     * @throws SSHError
-     */
-    public function setDefaultCli(): void
-    {
-        $this->service->server->ssh()->exec(
-            view('ssh.services.nodejs.change-default-nodejs', [
-                'version' => $this->service->version,
-            ]),
-            'change-default-nodejs'
-        );
     }
 }
