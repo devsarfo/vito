@@ -130,7 +130,7 @@ class NodeJS extends AbstractSiteType
         return [
             [
                 'name' => 'npm:install',
-                'command' => 'npm install --production',
+                'command' => 'npm install',
             ],
         ];
     }

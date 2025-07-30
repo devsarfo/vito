@@ -2,10 +2,10 @@ cd $SITE_PATH
 
 git pull origin $BRANCH
 
-npm install --production
+npm install
 
 npm run build
 
-sudo service supervisor restart
+sudo supervisorctl restart all
 
 echo "✅ Deployment completed successfully!"

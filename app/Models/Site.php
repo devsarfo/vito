@@ -124,13 +124,6 @@ class Site extends AbstractModel
                 $site->refresh()->gitHook?->delete();
             }
         });
-
-        static::created(function (Site $site): void {
-            $site->deploymentScript()->create([
-                'name' => 'default',
-                'content' => '',
-            ]);
-        });
     }
 
     public function isReady(): bool

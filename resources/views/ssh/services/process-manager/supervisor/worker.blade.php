@@ -8,3 +8,5 @@ numprocs={{ $numprocs }}
 redirect_stderr=true
 stdout_logfile={{ $logFile }}
 stopwaitsecs=3600
+stopasgroup=true
+killasgroup=true

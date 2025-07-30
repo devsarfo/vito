@@ -10,7 +10,7 @@ php artisan migrate --force
 php artisan optimize:clear
 php artisan optimize
 
-sudo service supervisor restart
+sudo supervisorctl restart all
 
 php artisan up
 
