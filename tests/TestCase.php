@@ -142,6 +142,8 @@ abstract class TestCase extends BaseTestCase
             'branch' => 'main',
         ]);
 
+        $this->site->createDefaultDeploymentScript();
+
         $this->redirect = Redirect::factory()->create([
             'site_id' => $this->site->id,
         ]);

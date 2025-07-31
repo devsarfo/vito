@@ -44,6 +44,7 @@ class ApplicationTest extends TestCase
 
         $this->assertDatabaseHas('deployment_scripts', [
             'site_id' => $this->site->id,
+            'name' => 'default',
             'content' => 'some script',
         ]);
     }

@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -124,6 +125,10 @@ class Site extends AbstractModel
                 $site->refresh()->gitHook?->delete();
             }
         });
+
+        static::created(function (Site $site): void {
+            $site->createDefaultDeploymentScript();
+        });
     }
 
     public function isReady(): bool
@@ -186,7 +191,7 @@ class Site extends AbstractModel
      */
     public function deploymentScript(): HasOne
     {
-        return $this->hasOne(DeploymentScript::class);
+        return $this->hasOne(DeploymentScript::class, 'site_id');
     }
 
     /**
@@ -456,5 +461,24 @@ class Site extends AbstractModel
         }
 
         return $features;
+    }
+
+    public function createDefaultDeploymentScript(): void
+    {
+        if ($this->deploymentScript) {
+            return;
+        }
+        $script = '';
+        $path = resource_path('deployment-scripts/'.$this->type.'.sh');
+        if (File::exists($path)) {
+            $script = File::get($path);
+        }
+        $deploymentScript = new DeploymentScript([
+            'site_id' => $this->id,
+            'name' => 'default',
+            'content' => $script,
+        ]);
+        $deploymentScript->save();
+        $this->refresh();
     }
 }

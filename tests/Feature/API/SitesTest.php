@@ -220,10 +220,9 @@ class SitesTest extends TestCase
         $site = Site::factory()->create([
             'server_id' => $this->server->id,
         ]);
-
-        $script = $site->deploymentScript;
-        $script->content = 'git pull';
-        $script->save();
+        $site->deploymentScript?->update([
+            'content' => 'ls -la',
+        ]);
 
         $this->json('POST', route('api.projects.servers.sites.deploy', [
             'project' => $this->server->project,
