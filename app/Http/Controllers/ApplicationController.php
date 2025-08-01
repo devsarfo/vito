@@ -12,6 +12,7 @@ use App\Exceptions\SourceControlIsNotConnected;
 use App\Exceptions\SSHError;
 use App\Http\Resources\DeploymentResource;
 use App\Http\Resources\LoadBalancerServerResource;
+use App\Http\Resources\ServerLogResource;
 use App\Models\Server;
 use App\Models\Site;
 use Illuminate\Http\JsonResponse;
@@ -35,6 +36,7 @@ class ApplicationController extends Controller
         $this->authorize('view', [$site, $server]);
 
         return Inertia::render('application/index', [
+            'logs' => ServerLogResource::collection($site->logs()->latest()->simplePaginate(config('web.pagination_size'))),
             'deployments' => DeploymentResource::collection($site->deployments()->latest()->simplePaginate(config('web.pagination_size'))),
             'deploymentScript' => $site->deploymentScript?->content,
             'loadBalancerServers' => LoadBalancerServerResource::collection($site->loadBalancerServers),
