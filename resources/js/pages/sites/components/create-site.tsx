@@ -233,7 +233,7 @@ export default function CreateSite({ server, children }: { server?: Server; chil
         </Form>
         <SheetFooter>
           <div className="flex items-center gap-2">
-            <Button type="submit" form="create-site-form" disabled={form.processing}>
+            <Button type="submit" form="create-site-form" disabled={form.processing || !form.data.server}>
               {form.processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />} Create
             </Button>
             <SheetClose asChild>

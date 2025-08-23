@@ -81,7 +81,13 @@ export default function WorkerForm({ serverId, site, worker, children }: { serve
             {/*command*/}
             <FormField>
               <Label htmlFor="command">Command</Label>
-              <Input type="text" id="command" value={form.data.command} onChange={(e) => form.setData('command', e.target.value)} />
+              <Input
+                type="text"
+                id="command"
+                value={form.data.command}
+                onChange={(e) => form.setData('command', e.target.value)}
+                placeholder={site ? 'php artisan queue:work' : ''}
+              />
               <InputError message={form.errors.command} />
             </FormField>
 
