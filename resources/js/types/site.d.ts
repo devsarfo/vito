@@ -28,6 +28,8 @@ export interface Site {
   url: string;
   force_ssl: boolean;
   progress: number;
+  features: SiteFeature[];
+  modern_deployment: boolean;
   created_at: string;
   updated_at: string;
 

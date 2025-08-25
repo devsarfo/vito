@@ -27,7 +27,7 @@ use RuntimeException;
 /**
  * @property int $server_id
  * @property string $type
- * @property array<string, string> $type_data
+ * @property array<string, mixed> $type_data
  * @property string $domain
  * @property array<int, string> $aliases
  * @property string $web_directory
@@ -48,7 +48,10 @@ use RuntimeException;
  * @property Collection<int, Deployment> $deployments
  * @property Collection<int, Command> $commands
  * @property ?GitHook $gitHook
+ * @property Collection<int, DeploymentScript> $deploymentScripts
  * @property ?DeploymentScript $deploymentScript
+ * @property ?DeploymentScript $buildScript
+ * @property ?DeploymentScript $preFlightScript
  * @property Collection<int, Worker> $workers
  * @property Collection<int, Ssl> $ssls
  * @property ?Ssl $activeSsl
@@ -187,11 +190,62 @@ class Site extends AbstractModel
     }
 
     /**
+     * @return HasMany<DeploymentScript, covariant $this>
+     */
+    public function deploymentScripts(): HasMany
+    {
+        return $this->hasMany(DeploymentScript::class);
+    }
+
+    /**
      * @return HasOne<DeploymentScript, covariant $this>
      */
     public function deploymentScript(): HasOne
     {
-        return $this->hasOne(DeploymentScript::class, 'site_id');
+        return $this->hasOne(DeploymentScript::class, 'site_id')->where('name', 'default');
+    }
+
+    /**
+     * @return HasOne<DeploymentScript, covariant $this>
+     */
+    public function buildScript(): HasOne
+    {
+        return $this->hasOne(DeploymentScript::class, 'site_id')->where('name', 'build');
+    }
+
+    /**
+     * @return HasOne<DeploymentScript, covariant $this>
+     */
+    public function preFlightScript(): HasOne
+    {
+        return $this->hasOne(DeploymentScript::class, 'site_id')->where('name', 'pre-flight');
+    }
+
+    public function ensureDeploymentScriptsExist(): void
+    {
+        $modernDeploymentEnabled = $this->type_data['modern_deployment'] ?? false;
+
+        if ($modernDeploymentEnabled) {
+            if (! $this->buildScript) {
+                $this->deploymentScripts()->create([
+                    'name' => 'build',
+                    'content' => '',
+                ]);
+            }
+            if (! $this->preFlightScript) {
+                $this->deploymentScripts()->create([
+                    'name' => 'pre-flight',
+                    'content' => '',
+                ]);
+            }
+        }
+
+        if (! $this->deploymentScript) {
+            $this->deploymentScripts()->create([
+                'name' => 'default',
+                'content' => '',
+            ]);
+        }
     }
 
     /**
@@ -455,12 +509,20 @@ class Site extends AbstractModel
                     /** @var ActionInterface $handler */
                     $handler = new $handlerClass($this);
                     $action['active'] = $handler->active();
+                    if (! isset($action['form']) || empty($action['form'])) {
+                        $action['form'] = $handler->form()?->toArray() ?? [];
+                    }
                 }
                 $features[$featureKey]['actions'][$actionKey] = $action;
             }
         }
 
         return $features;
+    }
+
+    public function hasFeature(string $feature): bool
+    {
+        return in_array($feature, config('site.types.'.$this->type.'.features', []));
     }
 
     public function createDefaultDeploymentScript(): void
@@ -483,5 +545,10 @@ class Site extends AbstractModel
         ]);
         $deploymentScript->save();
         $this->refresh();
+    }
+
+    public function basePath(): string
+    {
+        return preg_replace('#/current$#', '', $this->path);
     }
 }

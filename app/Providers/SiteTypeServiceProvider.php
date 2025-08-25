@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\DTOs\DynamicField;
 use App\DTOs\DynamicForm;
 use App\Enums\LoadBalancerMethod;
+use App\Plugins\RegisterSiteFeature;
+use App\Plugins\RegisterSiteFeatureAction;
 use App\Plugins\RegisterSiteType;
 use App\SiteTypes\Laravel;
 use App\SiteTypes\LoadBalancer;
@@ -112,6 +114,22 @@ class SiteTypeServiceProvider extends ServiceProvider
                     ->label('Run `composer install --no-dev`')
                     ->default(false),
             ]))
+            ->register();
+        RegisterSiteFeature::make(Laravel::id(), 'modern-deployment')
+            ->label('Modern Deployment (beta)')
+            ->description('Enables zero downtime deployment and deployment rollbacks')
+            ->register();
+        RegisterSiteFeatureAction::make(Laravel::id(), 'modern-deployment', 'enable')
+            ->label('Enable')
+            ->handler(\App\SiteFeatures\ModernDeployment\Enable::class)
+            ->register();
+        RegisterSiteFeatureAction::make(Laravel::id(), 'modern-deployment', 'disable')
+            ->label('Disable')
+            ->handler(\App\SiteFeatures\ModernDeployment\Disable::class)
+            ->register();
+        RegisterSiteFeatureAction::make(Laravel::id(), 'modern-deployment', 'configuration')
+            ->label('Configure')
+            ->handler(\App\SiteFeatures\ModernDeployment\Configuration::class)
             ->register();
     }
 
