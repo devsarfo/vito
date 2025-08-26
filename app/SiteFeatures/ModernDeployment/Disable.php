@@ -2,7 +2,6 @@
 
 namespace App\SiteFeatures\ModernDeployment;
 
-use App\Actions\Site\Deploy;
 use App\DTOs\DynamicField;
 use App\DTOs\DynamicForm;
 use App\Exceptions\SSHError;
@@ -21,7 +20,7 @@ class Disable extends Action
 
     public function active(): bool
     {
-        return data_get($this->site->type_data, 'modern_deployment', false);
+        return $this->site->modernDeploymentEnabled();
     }
 
     public function form(): DynamicForm
@@ -29,7 +28,8 @@ class Disable extends Action
         return DynamicForm::make([
             DynamicField::make('alert')
                 ->alert()
-                ->description('Disabling modern deployment will remove all releases and keep the current active one as default and will start a new deployment with your default deployment script.'),
+                ->options(['type' => 'warning'])
+                ->description('Disabling modern deployment will remove all releases and keep the current active one as default.'),
         ]);
     }
 
@@ -51,6 +51,7 @@ class Disable extends Action
         unset($typeData['modern_deployment']);
         unset($typeData['modern_deployment_shared_resources']);
         unset($typeData['modern_deployment_history']);
+        unset($typeData['env_path']);
         $this->site->type_data = $typeData;
         $this->site->path = $this->site->basePath();
         $this->site->save();
@@ -60,8 +61,6 @@ class Disable extends Action
         // set releases to null as they are already removed
         $this->site->deployments()->update(['release' => null]);
 
-        app(Deploy::class)->run($this->site);
-
-        $request->session()->flash('success', 'Modern deployment disabled! Starting a new deployment to finish the setup.');
+        $request->session()->flash('success', 'Modern deployment disabled!');
     }
 }

@@ -18,7 +18,7 @@ class Configuration extends Action
 
     public function active(): bool
     {
-        return data_get($this->site->type_data, 'modern_deployment', false);
+        return $this->site->modernDeploymentEnabled();
     }
 
     public function form(): DynamicForm

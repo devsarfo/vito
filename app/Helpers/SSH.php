@@ -61,6 +61,13 @@ class SSH
         return $this;
     }
 
+    public function asUser(?string $user): self
+    {
+        $this->asUser = $user;
+
+        return $this;
+    }
+
     /**
      * @throws SSHConnectionError
      */
@@ -211,7 +218,9 @@ class SSH
             /** @var FilesystemAdapter $storageDisk */
             $storageDisk = Storage::disk('local');
             $storageDisk->put($tmpName, $content);
-            $this->upload($storageDisk->path($tmpName), $remotePath, $owner);
+            $tmpRemotePath = '/tmp/'.$tmpName;
+            $this->upload($storageDisk->path($tmpName), $tmpRemotePath, $owner);
+            $this->asUser($owner)->exec('cat '.$tmpRemotePath.' > '.$remotePath);
         } catch (Throwable $e) {
             throw new SSHCommandError(
                 message: $e->getMessage()

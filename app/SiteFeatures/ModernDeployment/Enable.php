@@ -2,7 +2,6 @@
 
 namespace App\SiteFeatures\ModernDeployment;
 
-use App\Actions\Site\Deploy;
 use App\DTOs\DynamicField;
 use App\DTOs\DynamicForm;
 use App\Exceptions\SSHError;
@@ -22,7 +21,7 @@ class Enable extends Action
 
     public function active(): bool
     {
-        return ! data_get($this->site->type_data, 'modern_deployment', false);
+        return ! $this->site->modernDeploymentEnabled();
     }
 
     public function form(): DynamicForm
@@ -36,7 +35,7 @@ class Enable extends Action
                 ->alert()
                 ->options(['type' => 'warning'])
                 ->link('Documentation', 'https://vitodeploy.com/docs/sites/modern-deployment')
-                ->description("Read the documentation first to see how Modern Deployment works. Enabling Modern Deployment will change your site's path and start a deployment to finish the setup. The new deployment will be with your default deployment script and for future deployments you will need to add Build and PreFlight scripts."),
+                ->description("Read the documentation first to see how Modern Deployment works. Enabling Modern Deployment will change your site's path."),
             DynamicField::make('alert-3')
                 ->alert()
                 ->options(['type' => 'warning'])
@@ -74,6 +73,7 @@ class Enable extends Action
         $typeData['modern_deployment'] = true;
         $typeData['modern_deployment_shared_resources'] = $sharedResources;
         $typeData['modern_deployment_history'] = (int) $request->input('history');
+        unset($typeData['env_path']);
         $this->site->type_data = $typeData;
         $this->site->path = $this->site->path.'/current';
         $this->site->save();
@@ -82,9 +82,7 @@ class Enable extends Action
 
         $this->site->webserver()->updateVHost($this->site, regenerate: ['core']);
 
-        app(Deploy::class)->run($this->site, false);
-
-        $request->session()->flash('success', 'Modern deployment enabled! Starting a new deployment to finish the setup.');
+        $request->session()->flash('success', 'Modern deployment enabled!');
     }
 
     private function validate(Request $request): void

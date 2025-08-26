@@ -38,7 +38,7 @@ class SiteResource extends JsonResource
             'force_ssl' => $this->force_ssl,
             'progress' => $this->progress,
             'features' => $this->features(),
-            'modern_deployment' => $this->type_data['modern_deployment'] ?? false,
+            'modern_deployment' => $this->modernDeploymentEnabled(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

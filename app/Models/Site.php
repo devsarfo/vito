@@ -223,9 +223,7 @@ class Site extends AbstractModel
 
     public function ensureDeploymentScriptsExist(): void
     {
-        $modernDeploymentEnabled = $this->type_data['modern_deployment'] ?? false;
-
-        if ($modernDeploymentEnabled) {
+        if ($this->modernDeploymentEnabled()) {
             if (! $this->buildScript) {
                 $this->deploymentScripts()->create([
                     'name' => 'build',
@@ -246,6 +244,11 @@ class Site extends AbstractModel
                 'content' => '',
             ]);
         }
+    }
+
+    public function modernDeploymentEnabled(): bool
+    {
+        return (bool) ($this->type_data['modern_deployment'] ?? false);
     }
 
     /**

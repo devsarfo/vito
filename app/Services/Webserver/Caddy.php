@@ -141,7 +141,7 @@ class Caddy extends AbstractWebserver
         $this->service->server->ssh()->exec(
             view('ssh.services.webserver.caddy.delete-site', [
                 'domain' => $site->domain,
-                'path' => $site->path,
+                'path' => $site->basePath(),
             ]),
             'delete-vhost',
             $site->id
