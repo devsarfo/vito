@@ -40,7 +40,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":1,"project_id":null,"global":true,"name":"voluptate","provider":"ftp","created_at":"2025-08-21T13:13:21.000000Z","updated_at":"2025-08-21T13:13:21.000000Z"},{"id":2,"project_id":null,"global":true,"name":"autem","provider":"dropbox","created_at":"2025-08-21T13:13:21.000000Z","updated_at":"2025-08-21T13:13:21.000000Z"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"\/","per_page":25,"to":2,"total":2}}'
+        content: '{"data":[{"id":3,"project_id":null,"global":true,"name":"sunt","provider":"ftp","created_at":"2025-08-26T17:05:41.000000Z","updated_at":"2025-08-26T17:05:41.000000Z"},{"id":4,"project_id":null,"global":true,"name":"consectetur","provider":"ftp","created_at":"2025-08-26T17:05:41.000000Z","updated_at":"2025-08-26T17:05:41.000000Z"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"\/","per_page":25,"to":2,"total":2}}'
         headers: []
         description: ''
         custom: []
@@ -142,7 +142,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"id":1,"project_id":null,"global":true,"name":"eius","provider":"dropbox","created_at":"2025-08-21T13:13:21.000000Z","updated_at":"2025-08-21T13:13:21.000000Z"}'
+        content: '{"id":3,"project_id":null,"global":true,"name":"eius","provider":"dropbox","created_at":"2025-08-26T17:05:41.000000Z","updated_at":"2025-08-26T17:05:41.000000Z"}'
         headers: []
         description: ''
         custom: []
@@ -183,7 +183,7 @@ endpoints:
         name: storageProvider_id
         description: 'The ID of the storageProvider.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -191,7 +191,7 @@ endpoints:
         custom: []
     cleanUrlParameters:
       project_id: 1
-      storageProvider_id: 16
+      storageProvider_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -200,7 +200,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"id":1,"project_id":null,"global":true,"name":"eius","provider":"dropbox","created_at":"2025-08-21T13:13:21.000000Z","updated_at":"2025-08-21T13:13:21.000000Z"}'
+        content: '{"id":3,"project_id":null,"global":true,"name":"commodi","provider":"dropbox","created_at":"2025-08-26T17:05:42.000000Z","updated_at":"2025-08-26T17:05:42.000000Z"}'
         headers: []
         description: ''
         custom: []
@@ -241,7 +241,7 @@ endpoints:
         name: storageProvider_id
         description: 'The ID of the storageProvider.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -249,7 +249,7 @@ endpoints:
         custom: []
     cleanUrlParameters:
       project_id: 1
-      storageProvider_id: 16
+      storageProvider_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -267,7 +267,7 @@ endpoints:
         name: global
         description: 'Accessible in all projects'
         required: true
-        example: true
+        example: false
         type: string
         enumValues:
           - true
@@ -277,12 +277,12 @@ endpoints:
         custom: []
     cleanBodyParameters:
       name: architecto
-      global: true
+      global: false
     fileParameters: []
     responses:
       -
         status: 200
-        content: '{"id":1,"project_id":null,"global":true,"name":"eius","provider":"dropbox","created_at":"2025-08-21T13:13:21.000000Z","updated_at":"2025-08-21T13:13:21.000000Z"}'
+        content: '{"id":3,"project_id":null,"global":true,"name":"eius","provider":"dropbox","created_at":"2025-08-26T17:05:42.000000Z","updated_at":"2025-08-26T17:05:42.000000Z"}'
         headers: []
         description: ''
         custom: []
@@ -323,7 +323,7 @@ endpoints:
         name: storageProvider_id
         description: 'The ID of the storageProvider.'
         required: true
-        example: 16
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -331,7 +331,7 @@ endpoints:
         custom: []
     cleanUrlParameters:
       project_id: 1
-      storageProvider_id: 16
+      storageProvider_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

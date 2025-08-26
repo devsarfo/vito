@@ -44,7 +44,7 @@ endpoints:
         name: site_id
         description: 'The ID of the site.'
         required: true
-        example: 5
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -53,7 +53,7 @@ endpoints:
     cleanUrlParameters:
       project_id: 1
       server_id: 1
-      site_id: 5
+      site_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -62,7 +62,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"data":[{"id":null,"site_id":null,"deployment_script_id":null,"log_id":null,"log":null,"commit_id":null,"commit_id_short":null,"commit_data":null,"status":null,"status_color":"gray","updated_at":null,"created_at":null},{"id":null,"site_id":null,"deployment_script_id":null,"log_id":null,"log":null,"commit_id":null,"commit_id_short":null,"commit_data":null,"status":null,"status_color":"gray","updated_at":null,"created_at":null}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"\/","per_page":25,"to":2,"total":2}}'
+        content: '{"data":[{"id":1,"site_id":1,"deployment_script_id":1,"log_id":1,"log":{"id":1,"server_id":1,"site_id":null,"type":"install-ufw","name":"1-1756227938-install-ufw.log","disk":"server-logs","is_remote":false,"created_at":"2025-08-26T17:05:38.000000Z","updated_at":"2025-08-26T17:05:38.000000Z"},"commit_id":"id","commit_id_short":null,"commit_data":[],"status":"finished","status_color":"success","release":null,"active":false,"updated_at":"2025-08-26T17:05:40.000000Z","created_at":"2025-08-26T17:05:40.000000Z"},{"id":2,"site_id":1,"deployment_script_id":1,"log_id":1,"log":{"id":1,"server_id":1,"site_id":null,"type":"install-ufw","name":"1-1756227938-install-ufw.log","disk":"server-logs","is_remote":false,"created_at":"2025-08-26T17:05:38.000000Z","updated_at":"2025-08-26T17:05:38.000000Z"},"commit_id":"id","commit_id_short":null,"commit_data":[],"status":"finished","status_color":"success","release":null,"active":false,"updated_at":"2025-08-26T17:05:40.000000Z","created_at":"2025-08-26T17:05:40.000000Z"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"\/","per_page":25,"to":2,"total":2}}'
         headers: []
         description: ''
         custom: []
@@ -113,7 +113,7 @@ endpoints:
         name: site_id
         description: 'The ID of the site.'
         required: true
-        example: 5
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
     cleanUrlParameters:
       project_id: 1
       server_id: 1
-      site_id: 5
+      site_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -131,7 +131,7 @@ endpoints:
     responses:
       -
         status: 201
-        content: '{"id":null,"site_id":null,"deployment_script_id":null,"log_id":null,"log":null,"commit_id":null,"commit_id_short":null,"commit_data":null,"status":null,"status_color":"gray","updated_at":null,"created_at":null}'
+        content: '{"id":1,"site_id":1,"deployment_script_id":1,"log_id":1,"log":{"id":1,"server_id":1,"site_id":null,"type":"install-ufw","name":"1-1756227938-install-ufw.log","disk":"server-logs","is_remote":false,"created_at":"2025-08-26T17:05:38.000000Z","updated_at":"2025-08-26T17:05:38.000000Z"},"commit_id":"id","commit_id_short":null,"commit_data":[],"status":"finished","status_color":"success","release":null,"active":false,"updated_at":"2025-08-26T17:05:40.000000Z","created_at":"2025-08-26T17:05:40.000000Z"}'
         headers: []
         description: ''
         custom: []
@@ -182,7 +182,7 @@ endpoints:
         name: site_id
         description: 'The ID of the site.'
         required: true
-        example: 5
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -192,7 +192,7 @@ endpoints:
         name: id
         description: 'The ID of the deployment.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -201,8 +201,8 @@ endpoints:
     cleanUrlParameters:
       project_id: 1
       server_id: 1
-      site_id: 5
-      id: 1
+      site_id: 1
+      id: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -211,7 +211,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"id":null,"site_id":null,"deployment_script_id":null,"log_id":null,"log":null,"commit_id":null,"commit_id_short":null,"commit_data":null,"status":null,"status_color":"gray","updated_at":null,"created_at":null}'
+        content: '{"id":1,"site_id":1,"deployment_script_id":1,"log_id":1,"log":{"id":1,"server_id":1,"site_id":null,"type":"install-ufw","name":"1-1756227938-install-ufw.log","disk":"server-logs","is_remote":false,"created_at":"2025-08-26T17:05:38.000000Z","updated_at":"2025-08-26T17:05:38.000000Z"},"commit_id":"id","commit_id_short":null,"commit_data":[],"status":"finished","status_color":"success","release":null,"active":false,"updated_at":"2025-08-26T17:05:40.000000Z","created_at":"2025-08-26T17:05:40.000000Z"}'
         headers: []
         description: ''
         custom: []

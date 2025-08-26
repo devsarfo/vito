@@ -5,6 +5,75 @@ description: ''
 endpoints:
   -
     httpMethods:
+      - GET
+    uri: 'api/projects/{project_id}/servers/{server_id}/sites/{site_id}/redirects'
+    metadata:
+      groupName: redirects
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: index
+      description: 'Get all redirects.'
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      project_id:
+        name: project_id
+        description: 'The ID of the project.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      server_id:
+        name: server_id
+        description: 'The ID of the server.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      site_id:
+        name: site_id
+        description: 'The ID of the site.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      project_id: 1
+      server_id: 1
+      site_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"server_id":1,"site_id":1,"from":"velit","to":"http:\/\/www.okon.com\/accusantium-harum-mollitia-modi-deserunt-aut-ab","mode":301,"status":"ready","status_color":"success","created_at":"2025-08-26T17:05:41.000000Z","updated_at":"2025-08-26T17:05:41.000000Z"},{"id":2,"server_id":1,"site_id":1,"from":"perspiciatis","to":"http:\/\/www.cruickshank.com\/adipisci-quidem-nostrum-qui-commodi-incidunt-iure","mode":308,"status":"ready","status_color":"success","created_at":"2025-08-26T17:05:41.000000Z","updated_at":"2025-08-26T17:05:41.000000Z"}],"links":{"first":"\/?page=1","last":"\/?page=1","prev":null,"next":null},"meta":{"current_page":1,"from":1,"last_page":1,"links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"\/?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"path":"\/","per_page":25,"to":2,"total":2}}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
       - POST
     uri: 'api/projects/{project_id}/servers/{server_id}/sites/{site_id}/redirects'
     metadata:
@@ -44,7 +113,7 @@ endpoints:
         name: site_id
         description: 'The ID of the site.'
         required: true
-        example: 5
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -53,7 +122,7 @@ endpoints:
     cleanUrlParameters:
       project_id: 1
       server_id: 1
-      site_id: 5
+      site_id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -81,7 +150,7 @@ endpoints:
         name: mode
         description: ''
         required: true
-        example: 308
+        example: 301
         type: string
         enumValues:
           - 301
@@ -94,7 +163,7 @@ endpoints:
     cleanBodyParameters:
       from: architecto
       to: architecto
-      mode: 308
+      mode: 301
     fileParameters: []
     responses:
       -
@@ -150,7 +219,7 @@ endpoints:
         name: site_id
         description: 'The ID of the site.'
         required: true
-        example: 5
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -160,7 +229,7 @@ endpoints:
         name: redirect_id
         description: 'The ID of the redirect.'
         required: true
-        example: 1
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -169,8 +238,8 @@ endpoints:
     cleanUrlParameters:
       project_id: 1
       server_id: 1
-      site_id: 5
-      redirect_id: 1
+      site_id: 1
+      redirect_id: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
