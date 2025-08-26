@@ -85,7 +85,7 @@ class Worker extends AbstractModel
         });
     }
 
-    public function getServerIdAttribute(int $value): int
+    public function getServerIdAttribute(?int $value): ?int
     {
         if ($value === 0) {
             $value = $this->site->server_id;

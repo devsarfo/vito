@@ -11,7 +11,6 @@ use App\Models\SourceControl;
 use App\Models\Ssl;
 use App\Models\Worker;
 use App\SiteTypes\Laravel;
-use App\SiteTypes\Wordpress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Seeder;
 
@@ -38,28 +37,13 @@ class SitesSeeder extends Seeder
             ]);
             $app->tags()->attach($server->tags()->first());
             Worker::factory()->create([
+                'server_id' => $server->id,
                 'site_id' => $app->id,
                 'command' => 'php artisan queue:work',
                 'status' => WorkerStatus::RUNNING,
             ]);
             Ssl::factory()->create([
                 'site_id' => $app->id,
-                'type' => SslType::LETSENCRYPT,
-                'expires_at' => now()->addYear(),
-                'status' => SslStatus::CREATED,
-            ]);
-
-            /** @var Site $blog */
-            $blog = Site::factory()->create([
-                'server_id' => $server->id,
-                'domain' => 'blog.'.$server->project->name.'.com',
-                'type' => Wordpress::id(),
-                'path' => '/home/vito/blog.'.$server->project->name.'.com',
-                'aliases' => ['www.blog.'.$server->project->name.'.com'],
-            ]);
-            $blog->tags()->attach($server->tags()->first());
-            Ssl::factory()->create([
-                'site_id' => $blog->id,
                 'type' => SslType::LETSENCRYPT,
                 'expires_at' => now()->addYear(),
                 'status' => SslStatus::CREATED,
