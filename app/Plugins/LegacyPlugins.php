@@ -7,7 +7,7 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Process;
 
-class Plugins
+class LegacyPlugins
 {
     /**
      * @return array<array<string, string>>

@@ -2,15 +2,15 @@
 
 namespace Tests\Unit\Plugins;
 
-use App\Plugins\Plugins;
+use App\Plugins\LegacyPlugins;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Process;
 use Tests\TestCase;
 
-class PluginsTest extends TestCase
+class LegacyPluginsTest extends TestCase
 {
-    private Plugins $plugins;
+    private LegacyPlugins $plugins;
 
     private string $pluginsBackupPath;
 
@@ -18,8 +18,8 @@ class PluginsTest extends TestCase
     {
         parent::setUp();
 
-        $this->plugins = new Plugins;
-        $this->pluginsBackupPath = storage_path('plugins_backup_'.time());
+        $this->plugins = new LegacyPlugins;
+        $this->pluginsBackupPath = storage_path('legacy_plugins_backup_'.time());
 
         $this->moveExistingPlugins();
         $this->cleanupTestPlugins();
