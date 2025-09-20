@@ -6,6 +6,11 @@ labels: bug
 assignees: 'saeedvaziry'
 ---
 
+## Vito Instance
+
+- version: [You can see the version hovering vito icon in dashboard]
+- installation: Local/VPS/Docker
+
 ## Describe the bug
 
 A clear and concise description of what the bug is.
