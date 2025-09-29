@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Actions\User\CreateUser;
 use App\Actions\User\UpdateUser;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\RouteAttributes\Attributes\Delete;
@@ -20,8 +19,8 @@ use Spatie\RouteAttributes\Attributes\Patch;
 use Spatie\RouteAttributes\Attributes\Post;
 use Spatie\RouteAttributes\Attributes\Prefix;
 
-#[Prefix('settings/users')]
-#[Middleware(['auth'])]
+#[Prefix('admin/users')]
+#[Middleware(['auth', 'must-be-admin'])]
 class UserController extends Controller
 {
     #[Get('/', name: 'users')]
@@ -31,7 +30,7 @@ class UserController extends Controller
 
         return Inertia::render('users/index', [
             'users' => UserResource::collection(
-                User::query()->with('projects')->simplePaginate(config('web.pagination_size'))
+                User::query()->simplePaginate(config('web.pagination_size'))
             ),
         ]);
     }
@@ -74,36 +73,6 @@ class UserController extends Controller
         app(UpdateUser::class)->update($user, $request->all());
 
         return to_route('users')->with('success', 'User updated successfully.');
-    }
-
-    #[Post('/{user}/projects', name: 'users.projects.store')]
-    public function addToProject(Request $request, User $user): RedirectResponse
-    {
-        $this->authorize('update', $user);
-
-        $this->validate($request, [
-            'project' => [
-                'required',
-                Rule::exists('projects', 'id'),
-            ],
-        ]);
-
-        $project = Project::query()->findOrFail($request->input('project'));
-
-        $user->projects()->detach($project);
-        $user->projects()->attach($project);
-
-        return to_route('users')->with('success', 'Project was successfully added to user.');
-    }
-
-    #[Delete('/{user}/projects/{project}', name: 'users.projects.destroy')]
-    public function removeProject(User $user, Project $project): RedirectResponse
-    {
-        $this->authorize('update', $user);
-
-        $user->projects()->detach($project);
-
-        return to_route('users')->with('success', 'Project was successfully removed from user.');
     }
 
     #[Delete('/{user}', 'users.destroy')]
