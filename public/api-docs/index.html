@@ -96,6 +96,18 @@
                                                                                 <li class="tocify-item level-2" data-unique="cron-jobs-DELETEapi-projects--project_id--servers--server_id--cron-jobs--cronJob_id-">
                                 <a href="#cron-jobs-DELETEapi-projects--project_id--servers--server_id--cron-jobs--cronJob_id-">delete</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="cron-jobs-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+                                <a href="#cron-jobs-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">site-list</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="cron-jobs-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+                                <a href="#cron-jobs-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">site-create</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="cron-jobs-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+                                <a href="#cron-jobs-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">site-show</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="cron-jobs-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+                                <a href="#cron-jobs-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">site-delete</a>
+                            </li>
                                                                         </ul>
                             </ul>
                     <ul id="tocify-header-database-users" class="tocify-header">
@@ -326,6 +338,9 @@
                                                                                 <li class="tocify-item level-2" data-unique="sites-PUTapi-projects--project_id--servers--server_id--sites--site_id--aliases">
                                 <a href="#sites-PUTapi-projects--project_id--servers--server_id--sites--site_id--aliases">aliases</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="sites-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory">
+                                <a href="#sites-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory">web-directory</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="sites-POSTapi-projects--project_id--servers--server_id--sites--site_id--deploy">
                                 <a href="#sites-POSTapi-projects--project_id--servers--server_id--sites--site_id--deploy">deploy</a>
                             </li>
@@ -477,7 +492,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: September 10, 2025</li>
+        <li>Last updated: September 29, 2025</li>
     </ul>
 </div>
 
@@ -923,26 +938,28 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: 1,
+            &quot;site_id&quot;: null,
             &quot;command&quot;: &quot;ls -la&quot;,
             &quot;user&quot;: &quot;root&quot;,
             &quot;frequency&quot;: &quot;* * * * *&quot;,
             &quot;status&quot;: &quot;ready&quot;,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: 1,
+            &quot;site_id&quot;: null,
             &quot;command&quot;: &quot;ls -la&quot;,
             &quot;user&quot;: &quot;root&quot;,
             &quot;frequency&quot;: &quot;* * * * *&quot;,
             &quot;status&quot;: &quot;ready&quot;,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -1129,15 +1146,16 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
+    &quot;site_id&quot;: null,
     &quot;command&quot;: &quot;ls -la&quot;,
     &quot;user&quot;: &quot;root&quot;,
     &quot;frequency&quot;: &quot;* * * * *&quot;,
     &quot;status&quot;: &quot;ready&quot;,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -1313,15 +1331,16 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
+    &quot;site_id&quot;: null,
     &quot;command&quot;: &quot;ls -la&quot;,
     &quot;user&quot;: &quot;root&quot;,
     &quot;frequency&quot;: &quot;* * * * *&quot;,
     &quot;status&quot;: &quot;ready&quot;,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -1578,6 +1597,753 @@ You can check the Dev Tools console for debugging information.</code></pre>
             </div>
                     </form>
 
+                    <h2 id="cron-jobs-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">site-list</h2>
+
+<p>
+</p>
+
+<p>Get all site cron jobs.</p>
+
+<span id="example-requests-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 2,
+            &quot;server_id&quot;: 1,
+            &quot;site_id&quot;: null,
+            &quot;command&quot;: &quot;ls -la&quot;,
+            &quot;user&quot;: &quot;root&quot;,
+            &quot;frequency&quot;: &quot;* * * * *&quot;,
+            &quot;status&quot;: &quot;ready&quot;,
+            &quot;status_color&quot;: &quot;success&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
+        },
+        {
+            &quot;id&quot;: 3,
+            &quot;server_id&quot;: 1,
+            &quot;site_id&quot;: null,
+            &quot;command&quot;: &quot;ls -la&quot;,
+            &quot;user&quot;: &quot;root&quot;,
+            &quot;frequency&quot;: &quot;* * * * *&quot;,
+            &quot;status&quot;: &quot;ready&quot;,
+            &quot;status_color&quot;: &quot;success&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
+        }
+    ],
+    &quot;links&quot;: {
+        &quot;first&quot;: &quot;/?page=1&quot;,
+        &quot;last&quot;: &quot;/?page=1&quot;,
+        &quot;prev&quot;: null,
+        &quot;next&quot;: null
+    },
+    &quot;meta&quot;: {
+        &quot;current_page&quot;: 1,
+        &quot;from&quot;: 1,
+        &quot;last_page&quot;: 1,
+        &quot;links&quot;: [
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;&amp;laquo; Previous&quot;,
+                &quot;active&quot;: false
+            },
+            {
+                &quot;url&quot;: &quot;/?page=1&quot;,
+                &quot;label&quot;: &quot;1&quot;,
+                &quot;active&quot;: true
+            },
+            {
+                &quot;url&quot;: null,
+                &quot;label&quot;: &quot;Next &amp;raquo;&quot;,
+                &quot;active&quot;: false
+            }
+        ],
+        &quot;path&quot;: &quot;/&quot;,
+        &quot;per_page&quot;: 25,
+        &quot;to&quot;: 2,
+        &quot;total&quot;: 2
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs" data-method="GET"
+      data-path="api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+                    onclick="tryItOut('GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+                    onclick="cancelTryOut('GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>project_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="project_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the project. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>server_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="server_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the server. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>site_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="site_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the site. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="cron-jobs-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">site-create</h2>
+
+<p>
+</p>
+
+<p>Create a new site cron job.</p>
+
+<span id="example-requests-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"command\": \"architecto\",
+    \"user\": \"vito\",
+    \"frequency\": \"* * * * *\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "command": "architecto",
+    "user": "vito",
+    "frequency": "* * * * *"
+};
+
+fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;id&quot;: 2,
+    &quot;server_id&quot;: 1,
+    &quot;site_id&quot;: null,
+    &quot;command&quot;: &quot;ls -la&quot;,
+    &quot;user&quot;: &quot;root&quot;,
+    &quot;frequency&quot;: &quot;* * * * *&quot;,
+    &quot;status&quot;: &quot;ready&quot;,
+    &quot;status_color&quot;: &quot;success&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs" data-method="POST"
+      data-path="api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+                    onclick="tryItOut('POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+                    onclick="cancelTryOut('POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>project_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="project_id"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the project. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>server_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="server_id"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the server. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>site_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="site_id"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the site. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>command</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="command"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="user"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="vito"
+               data-component="body">
+    <br>
+<p>Example: <code>vito</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>root</code></li> <li><code>vito</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>frequency</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="frequency"                data-endpoint="POSTapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs"
+               value="* * * * *"
+               data-component="body">
+    <br>
+<p>Frequency of the cron job. Example: <code>* * * * *</code></p>
+        </div>
+        </form>
+
+                    <h2 id="cron-jobs-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">site-show</h2>
+
+<p>
+</p>
+
+<p>Get a site cron job by ID.</p>
+
+<span id="example-requests-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;id&quot;: 2,
+    &quot;server_id&quot;: 1,
+    &quot;site_id&quot;: null,
+    &quot;command&quot;: &quot;ls -la&quot;,
+    &quot;user&quot;: &quot;root&quot;,
+    &quot;frequency&quot;: &quot;* * * * *&quot;,
+    &quot;status&quot;: &quot;ready&quot;,
+    &quot;status_color&quot;: &quot;success&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-" data-method="GET"
+      data-path="api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs/{cronJob_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+                    onclick="tryItOut('GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+                    onclick="cancelTryOut('GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs/{cronJob_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>project_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="project_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the project. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>server_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="server_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the server. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>site_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="site_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the site. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>cronJob_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="cronJob_id"                data-endpoint="GETapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the cronJob. Example: <code>1</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="cron-jobs-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">site-delete</h2>
+
+<p>
+</p>
+
+<p>Delete site cron job.</p>
+
+<span id="example-requests-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request DELETE \
+    "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs/1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "/api/projects/1/servers/1/cron-jobs/sites/1/cron-jobs/1"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "DELETE",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+            <blockquote>
+            <p>Example response (204):</p>
+        </blockquote>
+                <pre>
+<code>Empty response</code>
+ </pre>
+    </span>
+<span id="execution-results-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-" data-method="DELETE"
+      data-path="api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs/{cronJob_id}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+                    onclick="tryItOut('DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+                    onclick="cancelTryOut('DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-red">DELETE</small>
+            <b><code>api/projects/{project_id}/servers/{server_id}/cron-jobs/sites/{site_id}/cron-jobs/{cronJob_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>project_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="project_id"                data-endpoint="DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the project. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>server_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="server_id"                data-endpoint="DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the server. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>site_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="site_id"                data-endpoint="DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the site. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>cronJob_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="cronJob_id"                data-endpoint="DELETEapi-projects--project_id--servers--server_id--cron-jobs-sites--site_id--cron-jobs--cronJob_id-"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the cronJob. Example: <code>1</code></p>
+            </div>
+                    </form>
+
                 <h1 id="database-users">database-users</h1>
 
     
@@ -1626,26 +2392,26 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: 1,
-            &quot;username&quot;: &quot;hjerde&quot;,
+            &quot;username&quot;: &quot;jdach&quot;,
             &quot;databases&quot;: [],
             &quot;host&quot;: &quot;%&quot;,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;warning&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: 1,
-            &quot;username&quot;: &quot;little.raina&quot;,
+            &quot;username&quot;: &quot;lafayette.considine&quot;,
             &quot;databases&quot;: [],
             &quot;host&quot;: &quot;%&quot;,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;warning&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -1832,15 +2598,15 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;username&quot;: &quot;justina.gaylord&quot;,
     &quot;databases&quot;: [],
     &quot;host&quot;: &quot;%&quot;,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -2014,15 +2780,15 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;username&quot;: &quot;lafayette.considine&quot;,
     &quot;databases&quot;: [],
     &quot;host&quot;: &quot;%&quot;,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -2182,15 +2948,15 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;username&quot;: &quot;zbailey&quot;,
     &quot;databases&quot;: [],
     &quot;host&quot;: &quot;%&quot;,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -2507,26 +3273,26 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: 1,
             &quot;name&quot;: &quot;zbailey&quot;,
             &quot;collation&quot;: null,
             &quot;charset&quot;: null,
             &quot;status&quot;: &quot;ready&quot;,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: 1,
             &quot;name&quot;: &quot;rempel.chadrick&quot;,
             &quot;collation&quot;: null,
             &quot;charset&quot;: null,
             &quot;status&quot;: &quot;ready&quot;,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -2713,15 +3479,15 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;name&quot;: &quot;zbailey&quot;,
     &quot;collation&quot;: null,
     &quot;charset&quot;: null,
     &quot;status&quot;: &quot;ready&quot;,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -2895,15 +3661,15 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;name&quot;: &quot;rempel.chadrick&quot;,
     &quot;collation&quot;: null,
     &quot;charset&quot;: null,
     &quot;status&quot;: &quot;ready&quot;,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:01.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -3217,11 +3983,11 @@ fetch(url, {
                 &quot;server_id&quot;: 1,
                 &quot;site_id&quot;: null,
                 &quot;type&quot;: &quot;install-ufw&quot;,
-                &quot;name&quot;: &quot;1-1757505880-install-ufw.log&quot;,
+                &quot;name&quot;: &quot;1-1759136580-install-ufw.log&quot;,
                 &quot;disk&quot;: &quot;server-logs&quot;,
                 &quot;is_remote&quot;: false,
-                &quot;created_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;,
-                &quot;updated_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;
+                &quot;created_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;
             },
             &quot;commit_id&quot;: &quot;id&quot;,
             &quot;commit_id_short&quot;: null,
@@ -3230,8 +3996,8 @@ fetch(url, {
             &quot;status_color&quot;: &quot;success&quot;,
             &quot;release&quot;: null,
             &quot;active&quot;: false,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
             &quot;id&quot;: 2,
@@ -3243,11 +4009,11 @@ fetch(url, {
                 &quot;server_id&quot;: 1,
                 &quot;site_id&quot;: null,
                 &quot;type&quot;: &quot;install-ufw&quot;,
-                &quot;name&quot;: &quot;1-1757505880-install-ufw.log&quot;,
+                &quot;name&quot;: &quot;1-1759136580-install-ufw.log&quot;,
                 &quot;disk&quot;: &quot;server-logs&quot;,
                 &quot;is_remote&quot;: false,
-                &quot;created_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;,
-                &quot;updated_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;
+                &quot;created_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;,
+                &quot;updated_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;
             },
             &quot;commit_id&quot;: &quot;id&quot;,
             &quot;commit_id_short&quot;: null,
@@ -3256,8 +4022,8 @@ fetch(url, {
             &quot;status_color&quot;: &quot;success&quot;,
             &quot;release&quot;: null,
             &quot;active&quot;: false,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -3451,11 +4217,11 @@ fetch(url, {
         &quot;server_id&quot;: 1,
         &quot;site_id&quot;: null,
         &quot;type&quot;: &quot;install-ufw&quot;,
-        &quot;name&quot;: &quot;1-1757505880-install-ufw.log&quot;,
+        &quot;name&quot;: &quot;1-1759136580-install-ufw.log&quot;,
         &quot;disk&quot;: &quot;server-logs&quot;,
         &quot;is_remote&quot;: false,
-        &quot;created_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;
+        &quot;created_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;
     },
     &quot;commit_id&quot;: &quot;id&quot;,
     &quot;commit_id_short&quot;: null,
@@ -3464,8 +4230,8 @@ fetch(url, {
     &quot;status_color&quot;: &quot;success&quot;,
     &quot;release&quot;: null,
     &quot;active&quot;: false,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -3625,11 +4391,11 @@ fetch(url, {
         &quot;server_id&quot;: 1,
         &quot;site_id&quot;: null,
         &quot;type&quot;: &quot;install-ufw&quot;,
-        &quot;name&quot;: &quot;1-1757505880-install-ufw.log&quot;,
+        &quot;name&quot;: &quot;1-1759136580-install-ufw.log&quot;,
         &quot;disk&quot;: &quot;server-logs&quot;,
         &quot;is_remote&quot;: false,
-        &quot;created_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;,
-        &quot;updated_at&quot;: &quot;2025-09-10T12:04:40.000000Z&quot;
+        &quot;created_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;,
+        &quot;updated_at&quot;: &quot;2025-09-29T09:03:00.000000Z&quot;
     },
     &quot;commit_id&quot;: &quot;id&quot;,
     &quot;commit_id_short&quot;: null,
@@ -3638,8 +4404,8 @@ fetch(url, {
     &quot;status_color&quot;: &quot;success&quot;,
     &quot;release&quot;: null,
     &quot;active&quot;: false,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -3807,7 +4573,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 13,
+            &quot;id&quot;: 4,
             &quot;name&quot;: &quot;eius&quot;,
             &quot;server_id&quot;: 1,
             &quot;type&quot;: &quot;allow&quot;,
@@ -3818,11 +4584,11 @@ fetch(url, {
             &quot;note&quot;: &quot;test&quot;,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;info&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 14,
+            &quot;id&quot;: 5,
             &quot;name&quot;: &quot;velit&quot;,
             &quot;server_id&quot;: 1,
             &quot;type&quot;: &quot;allow&quot;,
@@ -3833,8 +4599,8 @@ fetch(url, {
             &quot;note&quot;: &quot;test&quot;,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;info&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -3984,7 +4750,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"type\": \"deny\",
+    \"type\": \"allow\",
     \"protocol\": \"tcp\",
     \"port\": \"architecto\",
     \"source\": \"architecto\",
@@ -4005,7 +4771,7 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "type": "deny",
+    "type": "allow",
     "protocol": "tcp",
     "port": "architecto",
     "source": "architecto",
@@ -4027,7 +4793,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 13,
+    &quot;id&quot;: 4,
     &quot;name&quot;: &quot;eius&quot;,
     &quot;server_id&quot;: 1,
     &quot;type&quot;: &quot;allow&quot;,
@@ -4038,8 +4804,8 @@ fetch(url, {
     &quot;note&quot;: &quot;test&quot;,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;info&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -4153,10 +4919,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="POSTapi-projects--project_id--servers--server_id--firewall-rules"
-               value="deny"
+               value="allow"
                data-component="body">
     <br>
-<p>Example: <code>deny</code></p>
+<p>Example: <code>allow</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>allow</code></li> <li><code>deny</code></li></ul>
         </div>
@@ -4226,7 +4992,7 @@ Must be one of:
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"type\": \"allow\",
+    \"type\": \"deny\",
     \"protocol\": \"tcp\",
     \"port\": \"architecto\",
     \"source\": \"architecto\",
@@ -4247,7 +5013,7 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "type": "allow",
+    "type": "deny",
     "protocol": "tcp",
     "port": "architecto",
     "source": "architecto",
@@ -4269,7 +5035,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 13,
+    &quot;id&quot;: 4,
     &quot;name&quot;: &quot;eius&quot;,
     &quot;server_id&quot;: 1,
     &quot;type&quot;: &quot;allow&quot;,
@@ -4280,8 +5046,8 @@ fetch(url, {
     &quot;note&quot;: &quot;test&quot;,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;info&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -4406,10 +5172,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="type"                data-endpoint="PUTapi-projects--project_id--servers--server_id--firewall-rules--firewallRule_id-"
-               value="allow"
+               value="deny"
                data-component="body">
     <br>
-<p>Example: <code>allow</code></p>
+<p>Example: <code>deny</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>allow</code></li> <li><code>deny</code></li></ul>
         </div>
@@ -4503,7 +5269,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 13,
+    &quot;id&quot;: 4,
     &quot;name&quot;: &quot;velit&quot;,
     &quot;server_id&quot;: 1,
     &quot;type&quot;: &quot;allow&quot;,
@@ -4514,8 +5280,8 @@ fetch(url, {
     &quot;note&quot;: &quot;test&quot;,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;info&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -4948,16 +5714,18 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 3,
-            &quot;name&quot;: &quot;Belle Dickens&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;id&quot;: 2,
+            &quot;name&quot;: &quot;Jennifer Bednar&quot;,
+            &quot;role&quot;: null,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 4,
-            &quot;name&quot;: &quot;Mittie Considine&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;id&quot;: 3,
+            &quot;name&quot;: &quot;Prof. Vida Terry&quot;,
+            &quot;role&quot;: null,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -5117,10 +5885,11 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 3,
+    &quot;id&quot;: 2,
     &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;role&quot;: null,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -5249,10 +6018,11 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 3,
+    &quot;id&quot;: 2,
     &quot;name&quot;: &quot;Aleen O&#039;Kon&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;role&quot;: null,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -5390,10 +6160,11 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 3,
+    &quot;id&quot;: 2,
     &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;role&quot;: null,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -5674,8 +6445,8 @@ fetch(url, {
             &quot;mode&quot;: 301,
             &quot;status&quot;: &quot;ready&quot;,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
             &quot;id&quot;: 2,
@@ -5686,8 +6457,8 @@ fetch(url, {
             &quot;mode&quot;: 308,
             &quot;status&quot;: &quot;ready&quot;,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -6237,20 +7008,22 @@ fetch(url, {
         {
             &quot;id&quot;: 6,
             &quot;project_id&quot;: null,
+            &quot;user_id&quot;: 9,
             &quot;global&quot;: true,
-            &quot;name&quot;: &quot;ab&quot;,
-            &quot;provider&quot;: &quot;custom&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;name&quot;: &quot;est&quot;,
+            &quot;provider&quot;: &quot;digitalocean&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
             &quot;id&quot;: 7,
             &quot;project_id&quot;: null,
+            &quot;user_id&quot;: 10,
             &quot;global&quot;: true,
-            &quot;name&quot;: &quot;incidunt&quot;,
-            &quot;provider&quot;: &quot;custom&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;name&quot;: &quot;magnam&quot;,
+            &quot;provider&quot;: &quot;hetzner&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -6432,11 +7205,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 6,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: 9,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;eius&quot;,
     &quot;provider&quot;: &quot;custom&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -6623,11 +7397,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 6,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: 9,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;mollitia&quot;,
     &quot;provider&quot;: &quot;linode&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -6780,11 +7555,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 6,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: 9,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;eius&quot;,
     &quot;provider&quot;: &quot;custom&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -7092,7 +7868,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;project_id&quot;: 1,
             &quot;services&quot;: [],
             &quot;user_id&quot;: 1,
@@ -7118,11 +7894,11 @@ fetch(url, {
             &quot;last_update_check&quot;: null,
             &quot;status_color&quot;: &quot;success&quot;,
             &quot;features&quot;: [],
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;project_id&quot;: 1,
             &quot;services&quot;: [],
             &quot;user_id&quot;: 1,
@@ -7148,8 +7924,8 @@ fetch(url, {
             &quot;last_update_check&quot;: null,
             &quot;status_color&quot;: &quot;success&quot;,
             &quot;features&quot;: [],
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -7341,7 +8117,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;project_id&quot;: 1,
     &quot;services&quot;: [],
     &quot;user_id&quot;: 1,
@@ -7367,8 +8143,8 @@ fetch(url, {
     &quot;last_update_check&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
     &quot;features&quot;: [],
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -7619,7 +8395,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;project_id&quot;: 1,
     &quot;services&quot;: [],
     &quot;user_id&quot;: 1,
@@ -7645,8 +8421,8 @@ fetch(url, {
     &quot;last_update_check&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
     &quot;features&quot;: [],
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -8203,7 +8979,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 29,
+            &quot;id&quot;: 8,
             &quot;server_id&quot;: 1,
             &quot;type&quot;: &quot;webserver&quot;,
             &quot;type_data&quot;: null,
@@ -8215,11 +8991,11 @@ fetch(url, {
             &quot;status_color&quot;: &quot;success&quot;,
             &quot;icon&quot;: &quot;&quot;,
             &quot;is_default&quot;: true,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 30,
+            &quot;id&quot;: 9,
             &quot;server_id&quot;: 1,
             &quot;type&quot;: &quot;webserver&quot;,
             &quot;type_data&quot;: null,
@@ -8231,8 +9007,8 @@ fetch(url, {
             &quot;status_color&quot;: &quot;success&quot;,
             &quot;icon&quot;: &quot;&quot;,
             &quot;is_default&quot;: true,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -8406,7 +9182,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 29,
+    &quot;id&quot;: 8,
     &quot;server_id&quot;: 1,
     &quot;type&quot;: &quot;webserver&quot;,
     &quot;type_data&quot;: null,
@@ -8418,8 +9194,8 @@ fetch(url, {
     &quot;status_color&quot;: &quot;success&quot;,
     &quot;icon&quot;: &quot;&quot;,
     &quot;is_default&quot;: true,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -9464,7 +10240,7 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: 1,
             &quot;source_control_id&quot;: null,
             &quot;type&quot;: &quot;laravel&quot;,
@@ -9614,11 +10390,11 @@ fetch(url, {
                 }
             },
             &quot;modern_deployment&quot;: false,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: 1,
             &quot;source_control_id&quot;: null,
             &quot;type&quot;: &quot;laravel&quot;,
@@ -9768,8 +10544,8 @@ fetch(url, {
                 }
             },
             &quot;modern_deployment&quot;: false,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -9931,7 +10707,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     \"composer\": true,
     \"version\": \"5.2.1\",
     \"user\": \"architecto\",
-    \"method\": \"round-robin\"
+    \"method\": \"least-connections\"
 }"
 </code></pre></div>
 
@@ -9960,7 +10736,7 @@ let body = {
     "composer": true,
     "version": "5.2.1",
     "user": "architecto",
-    "method": "round-robin"
+    "method": "least-connections"
 };
 
 fetch(url, {
@@ -9978,7 +10754,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;source_control_id&quot;: null,
     &quot;type&quot;: &quot;laravel&quot;,
@@ -10128,8 +10904,8 @@ fetch(url, {
         }
     },
     &quot;modern_deployment&quot;: false,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -10365,10 +11141,10 @@ You can check the Dev Tools console for debugging information.</code></pre>
  &nbsp;
                 <input type="text" style="display: none"
                               name="method"                data-endpoint="POSTapi-projects--project_id--servers--server_id--sites"
-               value="round-robin"
+               value="least-connections"
                data-component="body">
     <br>
-<p>Load balancer method, Required if the site type is Load balancer Example: <code>round-robin</code></p>
+<p>Load balancer method, Required if the site type is Load balancer Example: <code>least-connections</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>round-robin</code></li> <li><code>least-connections</code></li> <li><code>ip-hash</code></li></ul>
         </div>
@@ -10416,7 +11192,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;source_control_id&quot;: null,
     &quot;type&quot;: &quot;laravel&quot;,
@@ -10566,8 +11342,8 @@ fetch(url, {
         }
     },
     &quot;modern_deployment&quot;: false,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -11188,6 +11964,176 @@ You can check the Dev Tools console for debugging information.</code></pre>
                data-component="body">
     <br>
 <p>Array of aliases</p>
+        </div>
+        </form>
+
+                    <h2 id="sites-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory">web-directory</h2>
+
+<p>
+</p>
+
+<p>Update web directory.</p>
+
+<span id="example-requests-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request PUT \
+    "/api/projects/1/servers/1/sites/1/web-directory" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"web_directory\": \"architecto\"
+}"
+</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "/api/projects/1/servers/1/sites/1/web-directory"
+);
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+let body = {
+    "web_directory": "architecto"
+};
+
+fetch(url, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;"></code>
+ </pre>
+    </span>
+<span id="execution-results-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory" data-method="PUT"
+      data-path="api/projects/{project_id}/servers/{server_id}/sites/{site_id}/web-directory"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+                    onclick="tryItOut('PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory');">Try it out ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+                    onclick="cancelTryOut('PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory');" hidden>Cancel 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+                    data-initial-text="Send Request 💥"
+                    data-loading-text="⏱ Sending..."
+                    hidden>Send Request 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-darkblue">PUT</small>
+            <b><code>api/projects/{project_id}/servers/{server_id}/sites/{site_id}/web-directory</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>project_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="project_id"                data-endpoint="PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the project. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>server_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="server_id"                data-endpoint="PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the server. Example: <code>1</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>site_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="site_id"                data-endpoint="PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+               value="1"
+               data-component="url">
+    <br>
+<p>The ID of the site. Example: <code>1</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>web_directory</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="web_directory"                data-endpoint="PUTapi-projects--project_id--servers--server_id--sites--site_id--web-directory"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Web directory path Example: <code>architecto</code></p>
         </div>
         </form>
 
@@ -12044,20 +12990,22 @@ fetch(url, {
         {
             &quot;id&quot;: 4,
             &quot;project_id&quot;: null,
+            &quot;user_id&quot;: null,
             &quot;global&quot;: true,
             &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
             &quot;provider&quot;: &quot;github&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         },
         {
             &quot;id&quot;: 5,
             &quot;project_id&quot;: null,
+            &quot;user_id&quot;: null,
             &quot;global&quot;: true,
             &quot;name&quot;: &quot;Aleen O&#039;Kon&quot;,
             &quot;provider&quot;: &quot;github&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -12241,11 +13189,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 4,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: null,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;Mrs. Justina Gaylord&quot;,
     &quot;provider&quot;: &quot;github&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -12443,11 +13392,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 4,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: null,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;Misael Runte&quot;,
     &quot;provider&quot;: &quot;github&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -12608,11 +13558,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 4,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: null,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;Mrs. Justina Gaylord&quot;,
     &quot;provider&quot;: &quot;github&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -12964,16 +13915,16 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;name&quot;: &quot;Haven Romaguera&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;name&quot;: &quot;Viva Marquardt&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -13160,10 +14111,10 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -13491,30 +14442,30 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: 1,
             &quot;site_id&quot;: 1,
             &quot;is_active&quot;: false,
-            &quot;type&quot;: &quot;dolor&quot;,
+            &quot;type&quot;: &quot;eius&quot;,
             &quot;status&quot;: &quot;created&quot;,
             &quot;log&quot;: null,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;expires_at&quot;: &quot;2025-09-11T12:04:42.000000Z&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: 1,
             &quot;site_id&quot;: 1,
             &quot;is_active&quot;: false,
-            &quot;type&quot;: &quot;vel&quot;,
+            &quot;type&quot;: &quot;velit&quot;,
             &quot;status&quot;: &quot;created&quot;,
             &quot;log&quot;: null,
             &quot;status_color&quot;: &quot;success&quot;,
-            &quot;expires_at&quot;: &quot;2025-09-11T12:04:42.000000Z&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+            &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -13699,17 +14650,17 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;site_id&quot;: 1,
     &quot;is_active&quot;: false,
-    &quot;type&quot;: &quot;voluptatem&quot;,
+    &quot;type&quot;: &quot;nihil&quot;,
     &quot;status&quot;: &quot;created&quot;,
     &quot;log&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;expires_at&quot;: &quot;2025-09-11T12:04:42.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -13882,7 +14833,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;site_id&quot;: 1,
     &quot;is_active&quot;: false,
@@ -13890,9 +14841,9 @@ fetch(url, {
     &quot;status&quot;: &quot;created&quot;,
     &quot;log&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;expires_at&quot;: &quot;2025-09-11T12:04:42.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -14091,7 +15042,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;site_id&quot;: 1,
     &quot;is_active&quot;: false,
@@ -14099,9 +15050,9 @@ fetch(url, {
     &quot;status&quot;: &quot;created&quot;,
     &quot;log&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;expires_at&quot;: &quot;2025-09-11T12:04:42.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -14307,7 +15258,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;site_id&quot;: 1,
     &quot;is_active&quot;: false,
@@ -14315,9 +15266,9 @@ fetch(url, {
     &quot;status&quot;: &quot;created&quot;,
     &quot;log&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;expires_at&quot;: &quot;2025-09-11T12:04:42.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:42.000000Z&quot;
+    &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -14479,7 +15430,7 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: 1,
     &quot;site_id&quot;: 1,
     &quot;is_active&quot;: false,
@@ -14487,9 +15438,9 @@ fetch(url, {
     &quot;status&quot;: &quot;created&quot;,
     &quot;log&quot;: null,
     &quot;status_color&quot;: &quot;success&quot;,
-    &quot;expires_at&quot;: &quot;2025-09-11T12:04:43.000000Z&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;expires_at&quot;: &quot;2025-09-30T09:03:02.000000Z&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:02.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -14818,20 +15769,22 @@ fetch(url, {
         {
             &quot;id&quot;: 3,
             &quot;project_id&quot;: null,
+            &quot;user_id&quot;: 9,
             &quot;global&quot;: true,
-            &quot;name&quot;: &quot;animi&quot;,
+            &quot;name&quot;: &quot;harum&quot;,
             &quot;provider&quot;: &quot;dropbox&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         },
         {
             &quot;id&quot;: 4,
             &quot;project_id&quot;: null,
+            &quot;user_id&quot;: 10,
             &quot;global&quot;: true,
-            &quot;name&quot;: &quot;aut&quot;,
+            &quot;name&quot;: &quot;commodi&quot;,
             &quot;provider&quot;: &quot;dropbox&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -15013,11 +15966,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 3,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: 9,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;eius&quot;,
     &quot;provider&quot;: &quot;dropbox&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -15204,11 +16158,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 3,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: 9,
     &quot;global&quot;: true,
-    &quot;name&quot;: &quot;commodi&quot;,
-    &quot;provider&quot;: &quot;dropbox&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;name&quot;: &quot;et&quot;,
+    &quot;provider&quot;: &quot;local&quot;,
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -15324,7 +16279,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
     --header "Accept: application/json" \
     --data "{
     \"name\": \"architecto\",
-    \"global\": true
+    \"global\": false
 }"
 </code></pre></div>
 
@@ -15341,7 +16296,7 @@ const headers = {
 
 let body = {
     "name": "architecto",
-    "global": true
+    "global": false
 };
 
 fetch(url, {
@@ -15361,11 +16316,12 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;id&quot;: 3,
     &quot;project_id&quot;: null,
+    &quot;user_id&quot;: 9,
     &quot;global&quot;: true,
     &quot;name&quot;: &quot;eius&quot;,
     &quot;provider&quot;: &quot;dropbox&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -15482,7 +16438,7 @@ You can check the Dev Tools console for debugging information.</code></pre>
                value=""
                data-component="body">
     <br>
-<p>Accessible in all projects Example: <code>true</code></p>
+<p>Accessible in all projects Example: <code>false</code></p>
 Must be one of:
 <ul style="list-style-type: square;"><li><code>1</code></li> <li><code></code></li></ul>
         </div>
@@ -15673,9 +16629,10 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: null,
-            &quot;name&quot;: &quot;Mina Bauch&quot;,
+            &quot;site_id&quot;: null,
+            &quot;name&quot;: &quot;Prof. Russell Bashirian Jr.&quot;,
             &quot;command&quot;: &quot;php artisan queue:work&quot;,
             &quot;user&quot;: &quot;vito&quot;,
             &quot;auto_start&quot;: true,
@@ -15683,13 +16640,14 @@ fetch(url, {
             &quot;numprocs&quot;: 1,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;warning&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: null,
-            &quot;name&quot;: &quot;Mr. Oswald Koch&quot;,
+            &quot;site_id&quot;: null,
+            &quot;name&quot;: &quot;Easton Wuckert&quot;,
             &quot;command&quot;: &quot;php artisan queue:work&quot;,
             &quot;user&quot;: &quot;vito&quot;,
             &quot;auto_start&quot;: true,
@@ -15697,8 +16655,8 @@ fetch(url, {
             &quot;numprocs&quot;: 1,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;warning&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -15874,9 +16832,10 @@ fetch(url, {
 <code class="language-json" style="max-height: 300px;">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 5,
+            &quot;id&quot;: 2,
             &quot;server_id&quot;: null,
-            &quot;name&quot;: &quot;Myrtis Tromp&quot;,
+            &quot;site_id&quot;: null,
+            &quot;name&quot;: &quot;Miss Anna Goodwin&quot;,
             &quot;command&quot;: &quot;php artisan queue:work&quot;,
             &quot;user&quot;: &quot;vito&quot;,
             &quot;auto_start&quot;: true,
@@ -15884,13 +16843,14 @@ fetch(url, {
             &quot;numprocs&quot;: 1,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;warning&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         },
         {
-            &quot;id&quot;: 6,
+            &quot;id&quot;: 3,
             &quot;server_id&quot;: null,
-            &quot;name&quot;: &quot;Henri Mitchell&quot;,
+            &quot;site_id&quot;: null,
+            &quot;name&quot;: &quot;Dr. Weldon Kozey&quot;,
             &quot;command&quot;: &quot;php artisan queue:work&quot;,
             &quot;user&quot;: &quot;vito&quot;,
             &quot;auto_start&quot;: true,
@@ -15898,8 +16858,8 @@ fetch(url, {
             &quot;numprocs&quot;: 1,
             &quot;status&quot;: &quot;creating&quot;,
             &quot;status_color&quot;: &quot;warning&quot;,
-            &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+            &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
         }
     ],
     &quot;links&quot;: {
@@ -16084,9 +17044,10 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
-    &quot;name&quot;: &quot;Matilda Feeney&quot;,
+    &quot;site_id&quot;: null,
+    &quot;name&quot;: &quot;Arnaldo Schneider&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
     &quot;auto_start&quot;: true,
@@ -16094,8 +17055,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -16246,9 +17207,10 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
-    &quot;name&quot;: &quot;Shayna Raynor Jr.&quot;,
+    &quot;site_id&quot;: null,
+    &quot;name&quot;: &quot;Ernestina Huels&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
     &quot;auto_start&quot;: true,
@@ -16256,8 +17218,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -16438,8 +17400,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
+    &quot;site_id&quot;: null,
     &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
@@ -16448,8 +17411,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -16706,8 +17669,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
+    &quot;site_id&quot;: null,
     &quot;name&quot;: &quot;Ms. Elisabeth Okuneva&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
@@ -16716,8 +17680,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -16966,8 +17930,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
+    &quot;site_id&quot;: null,
     &quot;name&quot;: &quot;Aleen O&#039;Kon&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
@@ -16976,8 +17941,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -17128,8 +18093,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
+    &quot;site_id&quot;: null,
     &quot;name&quot;: &quot;Justina Gaylord&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
@@ -17138,8 +18104,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
@@ -17290,8 +18256,9 @@ fetch(url, {
                 <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;id&quot;: 5,
+    &quot;id&quot;: 2,
     &quot;server_id&quot;: null,
+    &quot;site_id&quot;: null,
     &quot;name&quot;: &quot;Misael Runte&quot;,
     &quot;command&quot;: &quot;php artisan queue:work&quot;,
     &quot;user&quot;: &quot;vito&quot;,
@@ -17300,8 +18267,8 @@ fetch(url, {
     &quot;numprocs&quot;: 1,
     &quot;status&quot;: &quot;creating&quot;,
     &quot;status_color&quot;: &quot;warning&quot;,
-    &quot;created_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-09-10T12:04:43.000000Z&quot;
+    &quot;created_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-09-29T09:03:03.000000Z&quot;
 }</code>
  </pre>
     </span>
