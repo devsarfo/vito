@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
  * @property User $user
  * @property Collection<int, Server> $servers
  * @property Collection<int, Site> $sites
- * @property Collection<int, User> $users
+ * @property Collection<int, UserProject> $users
  * @property Collection<int, NotificationChannel> $notificationChannels
  * @property Collection<int, SourceControl> $sourceControls
  */
