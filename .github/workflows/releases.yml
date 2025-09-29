@@ -143,8 +143,8 @@ jobs:
           prerelease: ${{ inputs.prerelease == 'true' }}
           generate_release_notes: true
 
-      - name: Install GitHub CLI
-        run: sudo apt-get install gh -y
+      - name: Verify GitHub CLI
+        run: gh --version
 
       - name: Get release notes from GitHub API
         id: fetch-release
