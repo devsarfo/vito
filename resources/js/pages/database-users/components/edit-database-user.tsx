@@ -1,4 +1,4 @@
-import { FormEvent, ReactNode, useState } from 'react';
+import { FormEvent, ReactNode, useState, useEffect } from 'react';
 import {
   Dialog,
   DialogClose,
@@ -17,50 +17,64 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/ui/input-error';
 import { Checkbox } from '@/components/ui/checkbox';
+import { DatabaseUser } from '@/types/database-user';
+import FormSuccessful from '@/components/form-successful';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type CreateForm = {
-  username: string;
+type EditForm = {
   password: string;
   remote: boolean;
-  host: string;
+  host?: string;
   permission: string;
 };
 
-export default function CreateDatabaseUser({
-  server,
-  onDatabaseUserCreated,
+export default function EditDatabaseUser({
+  databaseUser,
+  onDatabaseUserUpdated,
   children,
 }: {
-  server: number;
-  onDatabaseUserCreated?: () => void;
+  databaseUser: DatabaseUser;
+  onDatabaseUserUpdated?: () => void;
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
 
-  const form = useForm<CreateForm>({
-    username: '',
+  const form = useForm<EditForm>({
     password: '',
-    remote: false,
-    host: '',
-    permission: 'admin',
+    remote: databaseUser.host !== 'localhost',
+    host: databaseUser.host,
+    permission: databaseUser.permission,
   });
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    form.post(route('database-users.store', server), {
+    form.put(route('database-users.update', { server: databaseUser.server_id, databaseUser: databaseUser.id }), {
       onSuccess: () => {
         form.reset();
         setOpen(false);
-        if (onDatabaseUserCreated) {
-          onDatabaseUserCreated();
+        if (onDatabaseUserUpdated) {
+          onDatabaseUserUpdated();
         }
       },
     });
   };
 
+  useEffect(() => {
+    if (open) {
+      form.setData({
+        password: '',
+        remote: databaseUser.host !== 'localhost',
+        host: databaseUser.host,
+        permission: databaseUser.permission,
+      });
+    }
+  }, [open, databaseUser.host, databaseUser.permission]);
+
   const handleOpenChange = (open: boolean) => {
     setOpen(open);
+    if (!open) {
+      form.reset();
+    }
   };
 
   return (
@@ -68,24 +82,13 @@ export default function CreateDatabaseUser({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Create database user</DialogTitle>
-          <DialogDescription className="sr-only">Create new database user</DialogDescription>
+          <DialogTitle>Edit database user [{databaseUser.username}]</DialogTitle>
+          <DialogDescription className="sr-only">Edit database user</DialogDescription>
         </DialogHeader>
-        <Form className="p-4" id="create-database-user-form" onSubmit={submit}>
+        <Form className="p-4" id="edit-database-user-form" onSubmit={submit}>
           <FormFields>
             <FormField>
-              <Label htmlFor="username">Username</Label>
-              <Input
-                type="text"
-                id="username"
-                name="username"
-                value={form.data.username}
-                onChange={(e) => form.setData('username', e.target.value)}
-              />
-              <InputError message={form.errors.username} />
-            </FormField>
-            <FormField>
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">New Password (leave blank to keep current)</Label>
               <Input
                 type="password"
                 id="password"
@@ -133,7 +136,8 @@ export default function CreateDatabaseUser({
           </DialogClose>
           <Button type="button" onClick={submit} disabled={form.processing}>
             {form.processing && <LoaderCircle className="animate-spin" />}
-            Create
+            <FormSuccessful successful={form.recentlySuccessful} />
+            Save
           </Button>
         </DialogFooter>
       </DialogContent>

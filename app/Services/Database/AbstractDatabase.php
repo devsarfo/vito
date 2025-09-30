@@ -148,6 +148,22 @@ abstract class AbstractDatabase extends AbstractService implements Database
     /**
      * @throws SSHError
      */
+    public function updateUser(string $username, string $host, ?string $newPassword = null, ?string $newHost = null): void
+    {
+        $this->service->server->ssh()->exec(
+            view($this->getScriptView('update-user'), [
+                'username' => $username,
+                'host' => $host,
+                'newPassword' => $newPassword,
+                'newHost' => $newHost,
+            ]),
+            'update-user'
+        );
+    }
+
+    /**
+     * @throws SSHError
+     */
     public function deleteUser(string $username, string $host): void
     {
         $this->service->server->ssh()->exec(
@@ -162,7 +178,7 @@ abstract class AbstractDatabase extends AbstractService implements Database
     /**
      * @throws SSHError
      */
-    public function link(string $username, string $host, array $databases): void
+    public function link(string $username, string $host, array $databases, string $permission = 'admin'): void
     {
         $ssh = $this->service->server->ssh();
         $version = $this->service->version;
@@ -174,6 +190,7 @@ abstract class AbstractDatabase extends AbstractService implements Database
                     'host' => $host,
                     'database' => $database,
                     'version' => $version,
+                    'permission' => $permission,
                 ]),
                 'link-user-to-database'
             );
