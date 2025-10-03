@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Actions\Database\ManageBackupFile;
+use App\Actions\Backup\ManageBackupFile;
 use App\Enums\BackupFileStatus;
+use App\Enums\BackupType;
 use App\Facades\Notifier;
 use App\Notifications\FailedToDeleteBackupFileFromProvider;
 use App\StorageProviders\Dropbox;
@@ -88,20 +89,28 @@ class BackupFile extends AbstractModel
 
     public function tempPath(): string
     {
-        return '/home/'.$this->backup->server->getSshUser().'/'.$this->name.'.zip';
+        $extension = $this->getBackupExtension();
+
+        return '/home/'.$this->backup->server->getSshUser().'/'.$this->name.$extension;
     }
 
     public function path(): string
     {
         $storage = $this->backup->storage;
-        $databaseName = $this->backup->database->name;
+
+        // For file backups, use the path field; for database backups, use database name
+        $backupName = $this->backup->type === BackupType::FILE
+            ? basename($this->backup->path)
+            : $this->backup->database->name;
+
+        $extension = $this->getBackupExtension();
 
         return match ($storage->provider) {
-            Dropbox::id() => '/'.$databaseName.'/'.$this->name.'.zip',
+            Dropbox::id() => '/'.$backupName.'/'.$this->name.$extension,
             S3::id(), FTP::id(), Local::id() => implode('/', [
                 rtrim((string) $storage->credentials['path'], '/'),
-                $databaseName,
-                $this->name.'.zip',
+                $backupName,
+                $this->name.$extension,
             ]),
             default => '',
         };
@@ -117,5 +126,14 @@ class BackupFile extends AbstractModel
         }
 
         $this->delete();
+    }
+
+    private function getBackupExtension(): string
+    {
+        if ($this->backup->type === BackupType::DATABASE) {
+            return '.zip';
+        }
+
+        return '.tar.gz';
     }
 }
