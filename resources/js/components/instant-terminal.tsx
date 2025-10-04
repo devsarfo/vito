@@ -235,6 +235,7 @@ export default function InstantTerminal({ server, children }: { server: Server; 
   const newSession = async () => {
     await fetch(route('console.new-session', { server: server.id }), {});
     getWorkingDir(user);
+    clearOutputCallback();
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -310,7 +311,7 @@ export default function InstantTerminal({ server, children }: { server: Server; 
         <SheetHeader className="bg-muted/50 flex flex-row items-center justify-between border-b px-4 py-2">
           <div className="flex items-center gap-2">
             <TerminalSquareIcon className="h-4 w-4" />
-            <SheetTitle className="text-sm font-medium">Terminal - {server.name}</SheetTitle>
+            <SheetTitle className="text-sm font-medium">Headless Terminal - {server.name}</SheetTitle>
             <SheetDescription className="sr-only">Terminal</SheetDescription>
           </div>
 
@@ -418,6 +419,7 @@ export default function InstantTerminal({ server, children }: { server: Server; 
               <div className="flex items-center gap-2">
                 <LoaderCircleIcon className="text-muted-foreground h-4 w-4 animate-spin" />
                 <span className="text-muted-foreground font-mono text-sm">Running command...</span>
+                <button tabIndex={0} autoFocus className="opacity-0"></button>
               </div>
             )}
           </div>
