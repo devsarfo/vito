@@ -1,0 +1,1 @@
+import{j as o}from"./app-BEOn_i5s.js";import{c as s}from"./utils-C1FmsVW4.js";function r({className:t,...e}){return o.jsx("div",{"data-slot":"skeleton",className:s("bg-accent animate-pulse rounded-md",t),...e})}export{r as S};
