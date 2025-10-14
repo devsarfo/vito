@@ -28,8 +28,8 @@ laradumps.yaml
 /storage/pail
 .nvmrc
 /app/Vito/Plugins
-.mcp.json
 CLAUDE.md
 AGENTS.md
 .cursor
 .github/copilot-instructions.md
+boost.json
