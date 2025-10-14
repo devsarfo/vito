@@ -19,6 +19,7 @@ class ApiDocsController extends Controller
     public function apiYaml(): Response
     {
         $apiOrder = [
+            'base.yaml',
             'health.yaml',
             'projects.yaml',
             'servers.yaml',
@@ -29,6 +30,8 @@ class ApiDocsController extends Controller
             'workers.yaml',
             'firewall-rules.yaml',
             'ssl.yaml',
+            'workflows.yaml',
+            'server-providers.yaml',
         ];
 
         $combinedPaths = [];

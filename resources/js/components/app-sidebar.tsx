@@ -24,6 +24,7 @@ import {
   MousePointerClickIcon,
   ServerIcon,
   Settings2Icon,
+  WorkflowIcon,
   ZapIcon,
 } from 'lucide-react';
 import AppLogo from './app-logo';
@@ -49,6 +50,11 @@ export function AppSidebar({ secondNavItems, secondNavTitle }: { secondNavItems?
       title: 'Scripts',
       href: route('scripts'),
       icon: ZapIcon,
+    },
+    {
+      title: 'Workflows',
+      href: route('workflows'),
+      icon: WorkflowIcon,
     },
     {
       title: 'Settings',
@@ -128,7 +134,7 @@ export function AppSidebar({ secondNavItems, secondNavTitle }: { secondNavItems?
                           <span>{item.title}</span>
                         </a>
                       ) : (
-                        <Link href={item.href} prefetch>
+                        <Link href={item.href}>
                           {item.icon && <item.icon />}
                           <span>{item.title}</span>
                         </Link>
@@ -203,7 +209,7 @@ export function AppSidebar({ secondNavItems, secondNavTitle }: { secondNavItems?
                                           <span>{childItem.title}</span>
                                         </a>
                                       ) : (
-                                        <Link href={childItem.href} prefetch>
+                                        <Link href={childItem.href}>
                                           {childItem.icon && <childItem.icon />}
                                           <span>{childItem.title}</span>
                                         </Link>
