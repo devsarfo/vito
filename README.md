@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/b06531f3-2066-436e-a0e3-0a5f1b7d5118" alt="VitoDeploy>
+    <img alt="VitoDeploy" src="https://github.com/user-attachments/assets/10f77c60-2dd4-47f0-a07a-12b0fd0b45db">
     <p align="center">
         <a href="https://github.com/vitodeploy/vito/actions"><img alt="GitHub Workflow Status" src="https://github.com/vitodeploy/vito/workflows/tests/badge.svg"></a>
     </p>
