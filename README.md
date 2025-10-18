@@ -32,6 +32,8 @@ bash <(curl -Ls https://raw.githubusercontent.com/vitodeploy/vito/3.x/scripts/in
 - API
 - Plugins
 - Export and Import
+- Workflows and Automations
+- Domains and DNS Management
 
 ## Useful Links
 
