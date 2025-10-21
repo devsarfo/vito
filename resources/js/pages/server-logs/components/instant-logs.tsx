@@ -43,10 +43,10 @@ export function InstantLogs({ server, children }: { server: Server; children: Re
   });
 
   useEffect(() => {
-    if (open && logs.length === 0) {
+    if (open) {
       query.refetch();
     }
-  }, [open, logs]);
+  }, [open]);
 
   useEffect(() => {
     query.refetch();
