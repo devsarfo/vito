@@ -169,6 +169,7 @@ class SSH
         }
 
         try {
+            $command = 'set -e; '.$command;
             if ($this->asUser !== null && $this->asUser !== '' && $this->asUser !== '0') {
                 $command = base64_encode((string) $command);
                 $command = "sudo su - {$this->asUser} -c 'bash -c \"echo {$command} | base64 -d | bash\"'";
