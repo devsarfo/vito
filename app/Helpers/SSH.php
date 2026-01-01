@@ -33,6 +33,9 @@ class SSH
 
     protected ?string $asUser = null;
 
+    /** @var array<string, string> */
+    protected array $variables = [];
+
     protected string $publicKey;
 
     protected PrivateKey $privateKey;
@@ -46,6 +49,7 @@ class SSH
         $this->connection = null;
         $this->log = null;
         $this->asUser = null;
+        $this->variables = [];
         $this->server = $server->refresh();
         $this->user = $server->getSshUser();
         if ($asUser && $asUser !== $server->getSshUser()) {
@@ -123,6 +127,16 @@ class SSH
     }
 
     /**
+     * @param  array<string, string>  $variables
+     */
+    public function variables(array $variables): self
+    {
+        $this->variables = $variables;
+
+        return $this;
+    }
+
+    /**
      * @throws SSHConnectionError
      */
     public function connect(bool $sftp = false): void
@@ -169,7 +183,11 @@ class SSH
         }
 
         try {
-            $command = 'set -e; '.$command;
+            $envPrefix = '';
+            foreach ($this->variables as $key => $value) {
+                $envPrefix .= sprintf('export %s=%s; ', $key, escapeshellarg($value));
+            }
+            $command = $envPrefix.'set -e; '.$command;
             if ($this->asUser !== null && $this->asUser !== '' && $this->asUser !== '0') {
                 $command = base64_encode((string) $command);
                 $command = "sudo su - {$this->asUser} -c 'bash -c \"echo {$command} | base64 -d | bash\"'";
