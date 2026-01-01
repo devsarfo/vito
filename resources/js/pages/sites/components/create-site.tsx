@@ -275,6 +275,7 @@ export default function CreateSite({
                     placeholder="Add aliases"
                     onValueChange={(value) => form.setData('aliases', value)}
                   />
+                  <p className="text-muted-foreground text-xs">Press enter or comma to add an alias and press backspace to remove the last alias.</p>
                   <InputError message={form.errors.aliases} />
                   {Object.keys(form.errors)
                     .filter((key) => key.startsWith('aliases.'))
