@@ -10,6 +10,6 @@ if ! sudo sed -i 's/www-data/{{ $user }}/g' /etc/php/{{ $version }}/fpm/pool.d/w
     echo 'VITO_SSH_ERROR' && exit 1
 fi
 
-sudo service php{{ $version }}-fpm enable
+sudo systemctl enable php{{ $version }}-fpm
 
-sudo service php{{ $version }}-fpm start
+sudo systemctl start php{{ $version }}-fpm

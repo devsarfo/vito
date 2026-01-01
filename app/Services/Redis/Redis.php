@@ -21,7 +21,7 @@ class Redis extends AbstractService
 
     public function unit(): string
     {
-        return 'redis';
+        return 'redis-server';
     }
 
     public function creationRules(array $input): array
