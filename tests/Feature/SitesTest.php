@@ -11,6 +11,8 @@ use App\Models\Site;
 use App\Models\SourceControl;
 use App\SiteTypes\Laravel;
 use App\SiteTypes\LoadBalancer;
+use App\SiteTypes\MiseNodeJS;
+use App\SiteTypes\NodeJS;
 use App\SiteTypes\PHPBlank;
 use App\SiteTypes\PHPMyAdmin;
 use App\SiteTypes\Wordpress;
@@ -692,6 +694,55 @@ class SitesTest extends TestCase
                     'aliases' => ['www.example.com'],
                     'user' => 'example',
                     'method' => LoadBalancerMethod::ROUND_ROBIN->value,
+                ],
+            ],
+            [
+                [
+                    'type' => MiseNodeJS::id(),
+                    'domain' => 'example.com',
+                    'aliases' => ['www.example.com'],
+                    'node_version' => '20',
+                    'package_manager' => 'npm',
+                    'port' => '3000',
+                    'repository' => 'test/test',
+                    'branch' => 'main',
+                ],
+            ],
+            [
+                [
+                    'type' => MiseNodeJS::id(),
+                    'domain' => 'example.com',
+                    'aliases' => ['www.example.com'],
+                    'node_version' => '22',
+                    'package_manager' => 'yarn',
+                    'port' => '3000',
+                    'repository' => 'test/test',
+                    'branch' => 'main',
+                    'user' => 'example',
+                ],
+            ],
+            [
+                [
+                    'type' => MiseNodeJS::id(),
+                    'domain' => 'example.com',
+                    'aliases' => ['www.example.com'],
+                    'node_version' => '22',
+                    'package_manager' => 'pnpm',
+                    'port' => '3000',
+                    'repository' => 'test/test',
+                    'branch' => 'main',
+                    'build_command' => 'pnpm run build:prod',
+                    'start_command' => 'pnpm run start:prod',
+                ],
+            ],
+            [
+                [
+                    'type' => NodeJS::id(),
+                    'domain' => 'example.com',
+                    'aliases' => ['www.example.com'],
+                    'port' => '3000',
+                    'repository' => 'test/test',
+                    'branch' => 'main',
                 ],
             ],
         ];

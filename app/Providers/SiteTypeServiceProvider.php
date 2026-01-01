@@ -5,11 +5,13 @@ namespace App\Providers;
 use App\DTOs\DynamicField;
 use App\DTOs\DynamicForm;
 use App\Enums\LoadBalancerMethod;
+use App\Enums\NodePackageManager;
 use App\Plugins\RegisterSiteFeature;
 use App\Plugins\RegisterSiteFeatureAction;
 use App\Plugins\RegisterSiteType;
 use App\SiteTypes\Laravel;
 use App\SiteTypes\LoadBalancer;
+use App\SiteTypes\MiseNodeJS;
 use App\SiteTypes\NodeJS;
 use App\SiteTypes\PHPBlank;
 use App\SiteTypes\PHPMyAdmin;
@@ -27,6 +29,7 @@ class SiteTypeServiceProvider extends ServiceProvider
         $this->phpBlank();
         $this->laravel();
         $this->nodeJS();
+        $this->miseNodeJS();
         $this->loadBalancer();
         $this->phpMyAdmin();
         $this->wordpress();
@@ -135,7 +138,7 @@ class SiteTypeServiceProvider extends ServiceProvider
     private function nodeJS(): void
     {
         RegisterSiteType::make(NodeJS::id())
-            ->label('NodeJS with NPM')
+            ->label('NodeJS with NPM (Deprecated)')
             ->handler(NodeJS::class)
             ->form(DynamicForm::make([
                 DynamicField::make('source_control')
@@ -155,6 +158,52 @@ class SiteTypeServiceProvider extends ServiceProvider
                     ->text()
                     ->label('Branch')
                     ->default('main'),
+            ]))
+            ->register();
+    }
+
+    private function miseNodeJS(): void
+    {
+        RegisterSiteType::make(MiseNodeJS::id())
+            ->label('Node.js')
+            ->handler(MiseNodeJS::class)
+            ->form(DynamicForm::make([
+                DynamicField::make('node_version')
+                    ->select()
+                    ->label('Node.js Version')
+                    ->options(MiseNodeJS::NODE_VERSIONS)
+                    ->default('22'),
+                DynamicField::make('package_manager')
+                    ->select()
+                    ->label('Package Manager')
+                    ->options(array_column(NodePackageManager::cases(), 'value'))
+                    ->default(NodePackageManager::Npm->value),
+                DynamicField::make('source_control')
+                    ->component()
+                    ->label('Source Control'),
+                DynamicField::make('port')
+                    ->text()
+                    ->label('Port')
+                    ->placeholder('3000')
+                    ->description('On which port your app will be running'),
+                DynamicField::make('repository')
+                    ->text()
+                    ->label('Repository')
+                    ->placeholder('organization/repository'),
+                DynamicField::make('branch')
+                    ->text()
+                    ->label('Branch')
+                    ->default('main'),
+                DynamicField::make('build_command')
+                    ->text()
+                    ->label('Build Command')
+                    ->placeholder('e.g., npm run build')
+                    ->description('Command to build your application. Leave empty to use the build script of package.json'),
+                DynamicField::make('start_command')
+                    ->text()
+                    ->label('Start Command')
+                    ->placeholder('e.g., npm start')
+                    ->description('Command to start your application. Leave empty to use the start script of package.json'),
             ]))
             ->register();
     }
