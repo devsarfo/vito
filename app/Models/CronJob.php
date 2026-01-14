@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $user
  * @property string $frequency
  * @property bool $hidden
+ * @property string|null $name
  * @property CronjobStatus $status
  * @property string $crontab
  * @property Server $server
@@ -32,6 +33,7 @@ class CronJob extends AbstractModel
         'frequency',
         'hidden',
         'status',
+        'name',
     ];
 
     protected $casts = [
