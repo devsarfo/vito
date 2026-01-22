@@ -11,6 +11,7 @@ use App\Exceptions\DeploymentScriptIsEmptyException;
 use App\Exceptions\FailedToDestroyGitHook;
 use App\Exceptions\SourceControlIsNotConnected;
 use App\Exceptions\SSHError;
+use App\Helpers\EnvParser;
 use App\Http\Resources\DeploymentResource;
 use App\Http\Resources\DeploymentScriptResource;
 use App\Http\Resources\LoadBalancerServerResource;
@@ -118,8 +119,31 @@ class ApplicationController extends Controller
 
         $env = $site->getEnv();
 
+        if ($site->env_variables !== null) {
+            $variables = EnvParser::maskSecrets($site->env_variables);
+        } else {
+            $variables = EnvParser::parse($env);
+        }
+
         return response()->json([
             'env' => $env,
+            'variables' => $variables,
+        ]);
+    }
+
+    #[Post('/env/parse', name: 'application.parse-env')]
+    public function parseEnv(Request $request, Server $server, Site $site): JsonResponse
+    {
+        $this->authorize('view', [$site, $server]);
+
+        $request->validate([
+            'content' => ['required', 'string'],
+        ]);
+
+        $variables = EnvParser::parse($request->input('content'));
+
+        return response()->json([
+            'variables' => $variables,
         ]);
     }
 
