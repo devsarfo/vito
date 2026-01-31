@@ -189,8 +189,11 @@ class SSH
             }
             $command = $envPrefix.'set -e; '.$command;
             if ($this->asUser !== null && $this->asUser !== '' && $this->asUser !== '0') {
-                $command = base64_encode((string) $command);
-                $command = "sudo su - {$this->asUser} -c 'bash -c \"echo {$command} | base64 -d | bash\"'";
+                $command = <<<BASH
+                sudo -u {$this->asUser} bash <<'EOF'
+                {$command}
+                EOF
+                BASH;
             }
 
             $this->connection->setTimeout(0);
