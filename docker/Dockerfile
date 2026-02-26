@@ -2,10 +2,7 @@ FROM dunglas/frankenphp:latest-php8.4
 
 WORKDIR /var/www/html
 
-ENV DEBIAN_FRONTEND=noninteractive
-
 # Install PHP extensions required by Vito
-# Note: pcntl is already included in FrankenPHP image
 RUN install-php-extensions \
     intl \
     mbstring \
@@ -16,9 +13,10 @@ RUN install-php-extensions \
     gd \
     redis \
     pdo_sqlite \
+    pcntl \
     opcache
 
-# Install additional tools (same as 3.x)
+# Install additional tools
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -28,26 +26,28 @@ RUN apt-get update && apt-get install -y \
     cron \
     && rm -rf /var/lib/apt/lists/*
 
-# php config
-COPY docker/php.ini /usr/local/etc/php/conf.d/99-vito.ini
-
-# composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# app
+# Copy application
 COPY . /var/www/html
 RUN rm -rf /var/www/html/.git /var/www/html/vendor /var/www/html/node_modules
+
+# Install composer dependencies
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader
+
+# Permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# cron
+# PHP configuration for Octane
+COPY docker/php.ini /usr/local/etc/php/conf.d/99-vito.ini
+
+# Cron for scheduler
 RUN echo "* * * * * cd /var/www/html && php artisan schedule:run >> /var/log/cron.log 2>&1" | crontab -
 
-# supervisord
+# Supervisor for Horizon
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# start
+# Startup script
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
