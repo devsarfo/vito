@@ -12,7 +12,6 @@ echo "
 "
 
 export VITO_VERSION="4.x"
-export VITO_CHANNEL="${VITO_CHANNEL:-release}"
 export DEBIAN_FRONTEND=noninteractive
 export NEEDRESTART_MODE=a
 
@@ -174,19 +173,7 @@ find /home/vito/vito -type d -exec chmod 755 {} \;
 find /home/vito/vito -type f -exec chmod 644 {} \;
 cd /home/vito/vito && git config core.fileMode false
 cd /home/vito/vito
-if [[ "${VITO_CHANNEL}" == "release" ]]; then
-  LATEST_RELEASE_TAG=$(git tag -l --merged ${VITO_VERSION} --sort=-v:refname | head -n 1)
-
-  if [[ -z "${LATEST_RELEASE_TAG}" ]]; then
-    echo "No release tag found on branch ${VITO_VERSION}."
-    echo "Set VITO_CHANNEL=branch to install directly from branch ${VITO_VERSION}."
-    exit 1
-  fi
-
-  git checkout "${LATEST_RELEASE_TAG}"
-else
-  echo "Installing from branch ${VITO_VERSION} (VITO_CHANNEL=${VITO_CHANNEL})."
-fi
+git checkout $(git tag -l --merged ${VITO_VERSION} --sort=-v:refname | head -n 1)
 composer install --no-dev
 cp .env.prod .env
 sed -i "s|^APP_URL=.*|APP_URL=${VITO_APP_URL}|" .env
