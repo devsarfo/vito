@@ -35,7 +35,7 @@ mkdir -p /home/vito/.logs
 
 # Stop current workers
 echo "Stopping current workers..."
-sudo supervisorctl stop worker:* || true
+sudo supervisorctl stop worker:* 2>/dev/null || true
 
 # Fetch and checkout 4.x
 echo "Fetching 4.x branch..."
@@ -59,6 +59,9 @@ composer install --no-dev
 # Install FrankenPHP binary via Octane
 echo "Installing FrankenPHP..."
 php artisan octane:install --server=frankenphp --no-interaction
+
+# Backup nginx config
+cp /etc/nginx/sites-available/vito /etc/nginx/sites-available/vito.bak
 
 # Update nginx config (proxy to Octane)
 echo "Updating nginx configuration..."
@@ -139,22 +142,8 @@ echo "Starting Octane and Horizon..."
 sudo supervisorctl start octane
 sudo supervisorctl start horizon
 
-# Verify services are running
-sleep 2
-echo "Verifying services..."
-if sudo supervisorctl status octane | grep -q "RUNNING"; then
-    echo "Octane is running"
-else
-    echo "Warning: Octane may not have started correctly"
-    sudo supervisorctl status octane
-fi
-
-if sudo supervisorctl status horizon | grep -q "RUNNING"; then
-    echo "Horizon is running"
-else
-    echo "Warning: Horizon may not have started correctly"
-    sudo supervisorctl status horizon
-fi
-
 echo ""
 echo "Upgraded to 4.x with Octane + FrankenPHP!"
+echo ""
+echo "Note: If you had SSL configured, you need to reconfigure it."
+echo "Your old nginx config is backed up at: /etc/nginx/sites-available/vito.bak"

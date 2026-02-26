@@ -104,11 +104,11 @@ export V_NODE_VERSION="20.x"
 curl -fsSL https://deb.nodesource.com/setup_${V_NODE_VERSION} | sudo -E bash -
 apt install -y nodejs
 
-# php (CLI and FPM - FPM needed for managed sites)
+# php
 export V_PHP_VERSION="8.4"
 add-apt-repository ppa:ondrej/php -y
 apt update
-apt install -y php${V_PHP_VERSION} php${V_PHP_VERSION}-fpm php${V_PHP_VERSION}-mbstring php${V_PHP_VERSION}-mcrypt php${V_PHP_VERSION}-gd php${V_PHP_VERSION}-xml php${V_PHP_VERSION}-curl php${V_PHP_VERSION}-gettext php${V_PHP_VERSION}-zip php${V_PHP_VERSION}-bcmath php${V_PHP_VERSION}-soap php${V_PHP_VERSION}-redis php${V_PHP_VERSION}-sqlite3 php${V_PHP_VERSION}-intl php${V_PHP_VERSION}-pcntl
+apt install -y php${V_PHP_VERSION} php${V_PHP_VERSION}-fpm php${V_PHP_VERSION}-mbstring php${V_PHP_VERSION}-gd php${V_PHP_VERSION}-xml php${V_PHP_VERSION}-curl php${V_PHP_VERSION}-zip php${V_PHP_VERSION}-bcmath php${V_PHP_VERSION}-soap php${V_PHP_VERSION}-redis php${V_PHP_VERSION}-sqlite3 php${V_PHP_VERSION}-intl
 if ! sed -i "s/www-data/vito/g" /etc/php/${V_PHP_VERSION}/fpm/pool.d/www.conf; then
   echo 'Error installing PHP' && exit 1
 fi
@@ -119,7 +119,7 @@ service php${V_PHP_VERSION}-fpm restart
 sed -i "s/memory_limit = .*/memory_limit = 1G/" /etc/php/${V_PHP_VERSION}/fpm/php.ini
 sed -i "s/upload_max_filesize = .*/upload_max_filesize = 1G/" /etc/php/${V_PHP_VERSION}/fpm/php.ini
 sed -i "s/post_max_size = .*/post_max_size = 1G/" /etc/php/${V_PHP_VERSION}/fpm/php.ini
-# Also update CLI php.ini for Octane
+# CLI php.ini for Octane
 sed -i "s/memory_limit = .*/memory_limit = 1G/" /etc/php/${V_PHP_VERSION}/cli/php.ini
 
 # composer
@@ -131,7 +131,10 @@ apt install redis-server -y
 service redis enable
 service redis start
 
-# Vito nginx vhost (proxy to Octane)
+# setup website
+export COMPOSER_ALLOW_SUPERUSER=1
+export V_REPO="https://github.com/vitodeploy/vito.git"
+# Octane: nginx proxies to Octane instead of php-fpm
 export V_VHOST_CONFIG="
 server {
     listen 80;
@@ -163,11 +166,7 @@ rm /etc/nginx/sites-enabled/default
 echo "${V_VHOST_CONFIG}" | tee /etc/nginx/sites-available/vito
 ln -s /etc/nginx/sites-available/vito /etc/nginx/sites-enabled/
 service nginx restart
-
-# clone repository
 rm -rf /home/vito/vito
-export COMPOSER_ALLOW_SUPERUSER=1
-export V_REPO="https://github.com/vitodeploy/vito.git"
 git config --global core.fileMode false
 git clone -b ${VITO_VERSION} ${V_REPO} /home/vito/vito
 find /home/vito/vito -type d -exec chmod 755 {} \;
@@ -180,8 +179,7 @@ cp .env.prod .env
 sed -i "s|^APP_URL=.*|APP_URL=${VITO_APP_URL}|" .env
 touch /home/vito/vito/storage/database.sqlite
 
-# Install FrankenPHP via Octane
-echo "Installing FrankenPHP..."
+# Octane: Install FrankenPHP
 php artisan octane:install --server=frankenphp --no-interaction
 
 php artisan key:generate
@@ -200,8 +198,9 @@ php artisan optimize
 # cleanup
 chown -R vito:vito /home/vito
 
-# setup supervisor with Octane and Horizon
-export V_SUPERVISOR_CONFIG="
+# setup supervisor
+# Octane: Run Octane + Horizon instead of just Horizon
+export V_WORKER_CONFIG="
 [program:octane]
 process_name=%(program_name)s
 command=php /home/vito/vito/artisan octane:start --server=frankenphp --host=127.0.0.1 --port=8000
@@ -229,11 +228,11 @@ mkdir -p /home/vito/.logs
 touch /home/vito/.logs/octane.log
 touch /home/vito/.logs/horizon.log
 chown -R vito:vito /home/vito/.logs
-echo "${V_SUPERVISOR_CONFIG}" | tee /etc/supervisor/conf.d/vito.conf
+echo "${V_WORKER_CONFIG}" | tee /etc/supervisor/conf.d/vito.conf
 supervisorctl reread
 supervisorctl update
 
-# start Octane and Horizon
+# start workers
 supervisorctl start octane
 supervisorctl start horizon
 
