@@ -11,7 +11,8 @@ echo "
                                  |_|            |___/
 "
 
-export VITO_VERSION="3.x"
+export VITO_VERSION="${VITO_VERSION:-4.x}"
+export VITO_CHANNEL="${VITO_CHANNEL:-release}"
 export DEBIAN_FRONTEND=noninteractive
 export NEEDRESTART_MODE=a
 
@@ -53,7 +54,7 @@ mkdir /home/vito
 mkdir /home/vito/.ssh
 chown -R vito:vito /home/vito
 chsh -s /bin/bash "vito"
-su - "vito" -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" <<<y
+su - "vito" -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" <<< y
 
 # upgrade
 apt clean
@@ -187,7 +188,15 @@ find /home/vito/vito -type d -exec chmod 755 {} \;
 find /home/vito/vito -type f -exec chmod 644 {} \;
 cd /home/vito/vito && git config core.fileMode false
 cd /home/vito/vito
-git checkout $(git tag -l --merged ${VITO_VERSION} --sort=-v:refname | head -n 1)
+if [[ "${VITO_CHANNEL}" == "release" ]]; then
+  VITO_TAG=$(git tag -l --merged ${VITO_VERSION} --sort=-v:refname | head -n 1)
+
+  if [[ -n "${VITO_TAG}" ]]; then
+    git checkout ${VITO_TAG}
+  else
+    echo "No release tag found for ${VITO_VERSION}, using branch instead."
+  fi
+fi
 composer install --no-dev
 cp .env.prod .env
 sed -i "s|^APP_URL=.*|APP_URL=${VITO_APP_URL}|" .env
@@ -198,7 +207,7 @@ php artisan migrate --force
 php artisan user:create Vito ${V_ADMIN_EMAIL} ${V_ADMIN_PASSWORD}
 openssl genpkey -algorithm RSA -out /home/vito/vito/storage/ssh-private.pem
 chmod 600 /home/vito/vito/storage/ssh-private.pem
-ssh-keygen -y -f /home/vito/vito/storage/ssh-private.pem >/home/vito/vito/storage/ssh-public.key
+ssh-keygen -y -f /home/vito/vito/storage/ssh-private.pem > /home/vito/vito/storage/ssh-public.key
 chown -R vito:vito /home/vito/vito/storage/ssh-private.pem
 chown -R vito:vito /home/vito/vito/storage/ssh-public.key
 
