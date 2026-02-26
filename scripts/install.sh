@@ -108,16 +108,17 @@ apt install -y nodejs
 export V_PHP_VERSION="8.4"
 add-apt-repository ppa:ondrej/php -y
 apt update
-apt install -y php${V_PHP_VERSION} php${V_PHP_VERSION}-cli php${V_PHP_VERSION}-mbstring php${V_PHP_VERSION}-mcrypt php${V_PHP_VERSION}-gd php${V_PHP_VERSION}-xml php${V_PHP_VERSION}-curl php${V_PHP_VERSION}-gettext php${V_PHP_VERSION}-zip php${V_PHP_VERSION}-bcmath php${V_PHP_VERSION}-soap php${V_PHP_VERSION}-redis php${V_PHP_VERSION}-sqlite3 php${V_PHP_VERSION}-intl
+apt install -y php${V_PHP_VERSION} php${V_PHP_VERSION}-fpm php${V_PHP_VERSION}-mbstring php${V_PHP_VERSION}-mcrypt php${V_PHP_VERSION}-gd php${V_PHP_VERSION}-xml php${V_PHP_VERSION}-curl php${V_PHP_VERSION}-gettext php${V_PHP_VERSION}-zip php${V_PHP_VERSION}-bcmath php${V_PHP_VERSION}-soap php${V_PHP_VERSION}-redis php${V_PHP_VERSION}-sqlite3 php${V_PHP_VERSION}-intl
+if ! sed -i "s/www-data/vito/g" /etc/php/${V_PHP_VERSION}/fpm/pool.d/www.conf; then
+  echo 'Error installing PHP' && exit 1
+fi
+service php${V_PHP_VERSION}-fpm enable
+service php${V_PHP_VERSION}-fpm start
 apt install -y php${V_PHP_VERSION}-ssh2
-sed -i "s/memory_limit = .*/memory_limit = 1G/" /etc/php/${V_PHP_VERSION}/cli/php.ini
-sed -i "s/upload_max_filesize = .*/upload_max_filesize = 1G/" /etc/php/${V_PHP_VERSION}/cli/php.ini
-sed -i "s/post_max_size = .*/post_max_size = 1G/" /etc/php/${V_PHP_VERSION}/cli/php.ini
-
-# frankenphp
-curl -fsSL https://frankenphp.dev/install.sh | sh
-install -m 755 frankenphp /usr/local/bin/frankenphp
-rm frankenphp
+service php${V_PHP_VERSION}-fpm restart
+sed -i "s/memory_limit = .*/memory_limit = 1G/" /etc/php/${V_PHP_VERSION}/fpm/php.ini
+sed -i "s/upload_max_filesize = .*/upload_max_filesize = 1G/" /etc/php/${V_PHP_VERSION}/fpm/php.ini
+sed -i "s/post_max_size = .*/post_max_size = 1G/" /etc/php/${V_PHP_VERSION}/fpm/php.ini
 
 # composer
 curl -sS https://getcomposer.org/installer -o composer-setup.php
@@ -143,17 +144,30 @@ server {
 
     client_max_body_size 100M;
 
+    index index.php;
+
+    charset utf-8;
+
     location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection \"upgrade\";
-        proxy_read_timeout 300;
-        proxy_connect_timeout 300;
+        try_files \$uri \$uri/ /index.php?\$query_string;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    error_page 404 /index.php;
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php${V_PHP_VERSION}-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME \$realpath_root\$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_hide_header X-Powered-By;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
     }
 }
 "
@@ -196,38 +210,27 @@ chown -R vito:vito /home/vito
 
 # setup supervisor
 export V_WORKER_CONFIG="
-[program:octane]
-process_name=%(program_name)s
-command=php /home/vito/vito/artisan octane:start --server=frankenphp --host=127.0.0.1 --port=8000
-autostart=1
-autorestart=1
-user=vito
-redirect_stderr=true
-stdout_logfile=/home/vito/.logs/octane.log
-stopwaitsecs=10
-
 [program:worker]
-process_name=%(program_name)s
+process_name=%(program_name)s_%(process_num)02d
 command=php /home/vito/vito/artisan horizon
 autostart=1
 autorestart=1
 user=vito
 redirect_stderr=true
-stdout_logfile=/home/vito/.logs/worker.log
+stdout_logfile=/home/vito/.logs/workers/worker.log
 stopwaitsecs=3600
 "
 apt-get install supervisor -y
 service supervisor enable
 service supervisor start
 mkdir -p /home/vito/.logs
-touch /home/vito/.logs/octane.log
-touch /home/vito/.logs/worker.log
+mkdir -p /home/vito/.logs/workers
+touch /home/vito/.logs/workers/worker.log
 echo "${V_WORKER_CONFIG}" | tee /etc/supervisor/conf.d/worker.conf
 supervisorctl reread
 supervisorctl update
 
 # start worker
-supervisorctl start octane
 supervisorctl start worker:*
 
 # setup cronjobs
