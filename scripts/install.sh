@@ -11,7 +11,7 @@ echo "
                                  |_|            |___/
 "
 
-export VITO_VERSION="3.x"
+export VITO_VERSION="4.x"
 export DEBIAN_FRONTEND=noninteractive
 export NEEDRESTART_MODE=a
 
@@ -53,7 +53,7 @@ mkdir /home/vito
 mkdir /home/vito/.ssh
 chown -R vito:vito /home/vito
 chsh -s /bin/bash "vito"
-su - "vito" -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" <<<y
+su - "vito" -c "ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa" <<< y
 
 # upgrade
 apt clean
@@ -184,7 +184,7 @@ php artisan migrate --force
 php artisan user:create Vito ${V_ADMIN_EMAIL} ${V_ADMIN_PASSWORD}
 openssl genpkey -algorithm RSA -out /home/vito/vito/storage/ssh-private.pem
 chmod 600 /home/vito/vito/storage/ssh-private.pem
-ssh-keygen -y -f /home/vito/vito/storage/ssh-private.pem >/home/vito/vito/storage/ssh-public.key
+ssh-keygen -y -f /home/vito/vito/storage/ssh-private.pem > /home/vito/vito/storage/ssh-public.key
 chown -R vito:vito /home/vito/vito/storage/ssh-private.pem
 chown -R vito:vito /home/vito/vito/storage/ssh-public.key
 
