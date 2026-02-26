@@ -8,12 +8,13 @@ services:
             EMAIL: "vito@example.com"
             PASSWORD: "password"
             APP_KEY: "base64:UodiJrx3DkcMlizmoimNlDn+yd4q5f2VbkBay19rJwM="
+            OCTANE_SERVER: "frankenphp"
             APP_PORT: 8000
             APP_URL: "http://localhost:8000"
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-8000}:80'
+            - '${APP_PORT:-8000}:8000'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         volumes:
             - "vito-storage:/var/www/html/storage"
