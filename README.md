@@ -15,7 +15,7 @@ production servers without a hassle.
 ## Quick Start
 
 ```sh
-VITO_CHANNEL=dev bash <(curl -Ls https://raw.githubusercontent.com/vitodeploy/vito/4.x/scripts/install.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/vitodeploy/vito/4.x/scripts/install.sh)
 ```
 
 ## Features
