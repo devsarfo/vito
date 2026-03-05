@@ -109,14 +109,14 @@ export default function CronJobForm({
             {/*site selection - only show if we have sites data and not in site context*/}
             {page.props.sites && !site && (
               <FormField>
-                <Label htmlFor="site_id">Site</Label>
+                <Label htmlFor="site_id">Belongs to</Label>
                 <Select value={form.data.site_id} onValueChange={(value) => form.setData('site_id', value)}>
                   <SelectTrigger id="site_id">
                     <SelectValue placeholder="Select a site (optional)" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="0">Server (no site)</SelectItem>
+                      <SelectItem value="0">Server</SelectItem>
                       {page.props.sites.map((siteOption) => (
                         <SelectItem key={`site-${siteOption.id}`} value={siteOption.id.toString()}>
                           {siteOption.domain}

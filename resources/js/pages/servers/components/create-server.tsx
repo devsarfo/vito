@@ -1,4 +1,14 @@
-import { ClipboardCheckIcon, ClipboardIcon, LoaderCircle, PlusIcon, TrashIcon, TriangleAlert, WifiIcon } from 'lucide-react';
+import {
+  CheckIcon,
+  ChevronsUpDownIcon,
+  ClipboardCheckIcon,
+  ClipboardIcon,
+  LoaderCircle,
+  PlusIcon,
+  TrashIcon,
+  TriangleAlert,
+  WifiIcon,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useForm, usePage } from '@inertiajs/react';
@@ -29,6 +39,9 @@ import {
 import ServerTemplates from './templates';
 import { ServerTemplate, Service } from '@/types/server-template';
 import { Textarea } from '@/components/ui/textarea';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { cn } from '@/lib/utils';
 
 type CreateServerForm = {
   provider: string;
@@ -302,6 +315,9 @@ export default function CreateServer({
     await fetchRegions(parseInt(serverProvider));
   };
 
+  const [regionOpen, setRegionOpen] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
+
   const [regions, setRegions] = useState<{ [key: string]: string }>({});
   const fetchRegions = async (serverProvider: number) => {
     const regions = await axios.get(route('server-providers.regions', { serverProvider: serverProvider }));
@@ -393,39 +409,85 @@ export default function CreateServer({
               <div className="grid grid-cols-2 gap-6">
                 <FormField>
                   <Label htmlFor="region">Region</Label>
-                  <Select value={form.data.region} onValueChange={selectRegion} disabled={form.data.server_provider === 0}>
-                    <SelectTrigger id="region">
-                      <SelectValue placeholder="Select a region" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {Object.entries(regions).map(([key, value]) => (
-                          <SelectItem key={`region-${key}`} value={key}>
-                            {value}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <Popover open={regionOpen} onOpenChange={setRegionOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="region"
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={regionOpen}
+                        className="w-full justify-between font-normal"
+                        disabled={form.data.server_provider === 0}
+                      >
+                        {form.data.region ? regions[form.data.region] || form.data.region : 'Select a region'}
+                        <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search region..." />
+                        <CommandList>
+                          <CommandGroup>
+                            {Object.entries(regions).map(([key, value]) => (
+                              <CommandItem
+                                key={`region-${key}`}
+                                value={value}
+                                onSelect={() => {
+                                  selectRegion(key);
+                                  setRegionOpen(false);
+                                }}
+                              >
+                                {value}
+                                <CheckIcon className={cn('ml-auto', form.data.region === key ? 'opacity-100' : 'opacity-0')} />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <InputError message={form.errors.region} />
                 </FormField>
 
                 <FormField>
                   <Label htmlFor="plan">Plan</Label>
-                  <Select value={form.data.plan} onValueChange={selectPlan} disabled={form.data.region === ''}>
-                    <SelectTrigger id="plan">
-                      <SelectValue placeholder="Select a plan" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {Object.entries(plans).map(([key, value]) => (
-                          <SelectItem key={`plan-${key}`} value={key}>
-                            {value}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <Popover open={planOpen} onOpenChange={setPlanOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="plan"
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={planOpen}
+                        className="w-full justify-between font-normal"
+                        disabled={form.data.region === ''}
+                      >
+                        {form.data.plan ? plans[form.data.plan] || form.data.plan : 'Select a plan'}
+                        <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search plan..." />
+                        <CommandList>
+                          <CommandGroup>
+                            {Object.entries(plans).map(([key, value]) => (
+                              <CommandItem
+                                key={`plan-${key}`}
+                                value={value}
+                                onSelect={() => {
+                                  selectPlan(key);
+                                  setPlanOpen(false);
+                                }}
+                              >
+                                {value}
+                                <CheckIcon className={cn('ml-auto', form.data.plan === key ? 'opacity-100' : 'opacity-0')} />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <InputError message={form.errors.plan} />
                 </FormField>
               </div>
