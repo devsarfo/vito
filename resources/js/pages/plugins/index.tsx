@@ -12,7 +12,6 @@ import { BookOpenIcon } from 'lucide-react';
 import InstallDialog from '@/pages/plugins/components/install-dialog';
 import DiscoveredPlugins from '@/pages/plugins/components/discovered';
 import CheckForUpdates from '@/pages/plugins/components/check-updates';
-import CommunityPlugins from '@/pages/plugins/components/community';
 import OfficialPlugins from '@/pages/plugins/components/official';
 
 export default function Plugins() {
@@ -44,8 +43,7 @@ export default function Plugins() {
           <TabsList>
             <TabsTrigger value="installed">Installed</TabsTrigger>
             <TabsTrigger value="discovered">Discovered</TabsTrigger>
-            <TabsTrigger value="official">Official</TabsTrigger>
-            <TabsTrigger value="community">Community</TabsTrigger>
+            <TabsTrigger value="official">Available</TabsTrigger>
           </TabsList>
           <TabsContent value="installed">
             <Card>
@@ -72,22 +70,11 @@ export default function Plugins() {
           <TabsContent value="official">
             <Card>
               <CardHeader>
-                <CardTitle>Official plugins</CardTitle>
+                <CardTitle>Available plugins</CardTitle>
                 <CardDescription>These plugins are developed and maintained by VitoDeploy's team</CardDescription>
               </CardHeader>
               <CardContent>
                 <OfficialPlugins />
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="community">
-            <Card>
-              <CardHeader>
-                <CardTitle>Community plugins</CardTitle>
-                <CardDescription>These plugins are developed and maintained by the community.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CommunityPlugins />
               </CardContent>
             </Card>
           </TabsContent>
