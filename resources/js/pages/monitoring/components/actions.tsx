@@ -26,7 +26,7 @@ function DataRetention() {
   }>();
   const [open, setOpen] = useState(false);
   const form = useForm({
-    data_retention: page.props.dataRetention || '30',
+    data_retention: String(page.props.dataRetention || '30'),
   });
 
   const submit = (e: FormEvent) => {
