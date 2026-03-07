@@ -2,7 +2,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Button } from '@/components/ui/button';
 import { MoreVerticalIcon } from 'lucide-react';
 import DateTime from '@/components/date-time';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Deployment } from '@/types/deployment';
 import { Badge } from '@/components/ui/badge';
 import { Download, View } from '@/pages/server-logs/components/columns';
@@ -74,10 +74,14 @@ export const columns: ColumnDef<Deployment>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <View serverLog={row.original.log} />
-              <Download serverLog={row.original.log}>
-                <DropdownMenuItem>Download</DropdownMenuItem>
-              </Download>
+              {row.original.log && (
+                <>
+                  <View serverLog={row.original.log} />
+                  <Download serverLog={row.original.log}>
+                    <DropdownMenuItem>Download</DropdownMenuItem>
+                  </Download>
+                </>
+              )}
               {!row.original.active && row.original.release && row.original.status === 'finished' && (
                 <Rollback deployment={row.original}>
                   <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
@@ -85,7 +89,6 @@ export const columns: ColumnDef<Deployment>[] = [
                   </DropdownMenuItem>
                 </Rollback>
               )}
-              <DropdownMenuSeparator />
               <DeleteDeployment deployment={row.original}>
                 <DropdownMenuItem variant="destructive" onSelect={(e) => e.preventDefault()}>
                   Delete

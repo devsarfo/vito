@@ -19,7 +19,7 @@ class DeploymentResource extends JsonResource
             'site_id' => $this->site_id,
             'deployment_script_id' => $this->deployment_script_id,
             'log_id' => $this->log_id,
-            'log' => new ServerLogResource($this->log),
+            'log' => $this->log ? new ServerLogResource($this->log) : null,
             'commit_id' => $this->commit_id,
             'commit_id_short' => $this->commit_id_short,
             'commit_data' => $this->commit_data,
