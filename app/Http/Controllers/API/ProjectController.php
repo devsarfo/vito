@@ -7,6 +7,7 @@ use App\Actions\Projects\DeleteProject;
 use App\Actions\Projects\UpdateProject;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
+use App\Models\PersonalAccessToken;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -25,7 +26,17 @@ class ProjectController extends Controller
     {
         $this->authorize('viewAny', Project::class);
 
-        return ProjectResource::collection(user()->projects()->get());
+        $projects = user()->projects();
+
+        $token = user()->currentAccessToken();
+        if ($token instanceof PersonalAccessToken && $token->exists) {
+            $scopedProjectIds = $token->getProjectIds();
+            if (! empty($scopedProjectIds)) {
+                $projects->whereIn('projects.id', $scopedProjectIds);
+            }
+        }
+
+        return ProjectResource::collection($projects->get());
     }
 
     #[Post('api/projects', name: 'api.projects.create', middleware: 'ability:write')]
@@ -38,7 +49,7 @@ class ProjectController extends Controller
         return new ProjectResource($project);
     }
 
-    #[Get('api/projects/{project}', name: 'api.projects.show', middleware: 'ability:read')]
+    #[Get('api/projects/{project}', name: 'api.projects.show', middleware: ['ability:read', 'can-see-project'])]
     public function show(Project $project): ProjectResource
     {
         $this->authorize('view', $project);
@@ -46,7 +57,7 @@ class ProjectController extends Controller
         return new ProjectResource($project);
     }
 
-    #[Put('api/projects/{project}', name: 'api.projects.update', middleware: 'ability:write')]
+    #[Put('api/projects/{project}', name: 'api.projects.update', middleware: ['ability:write', 'can-see-project'])]
     public function update(Request $request, Project $project): ProjectResource
     {
         $this->authorize('update', $project);
@@ -56,7 +67,7 @@ class ProjectController extends Controller
         return new ProjectResource($project);
     }
 
-    #[Delete('api/projects/{project}', name: 'api.projects.delete', middleware: 'ability:write')]
+    #[Delete('api/projects/{project}', name: 'api.projects.delete', middleware: ['ability:write', 'can-see-project'])]
     public function delete(Project $project): Response
     {
         $this->authorize('delete', $project);
