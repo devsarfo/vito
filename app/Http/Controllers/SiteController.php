@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Site\CreateSite;
+use App\Actions\Site\DisableSsl;
+use App\Actions\Site\EnableSsl;
 use App\Actions\Site\GetSites;
 use App\Helpers\QueryBuilder;
 use App\Http\Resources\ServerLogResource;
@@ -28,7 +30,7 @@ class SiteController extends Controller
     {
         $this->authorize('viewAny', user()->currentProject);
 
-        $sites = user()->currentProject->sites()->with('server')->latest();
+        $sites = user()->currentProject->sites()->with(['server', 'hostedDomains.ssl'])->latest();
 
         $sites = QueryBuilder::for($sites)
             ->searchableFields(['domain'])
@@ -45,7 +47,7 @@ class SiteController extends Controller
     {
         $this->authorize('viewAny', [Site::class, $server]);
 
-        $sites = $server->sites()->latest();
+        $sites = $server->sites()->with('hostedDomains.ssl')->latest();
         $sites = QueryBuilder::for($sites)
             ->searchableFields(['domain'])
             ->query()
@@ -98,6 +100,28 @@ class SiteController extends Controller
         }
 
         return redirect()->route('application', ['server' => $server->id, 'site' => $site->id]);
+    }
+
+    #[Post('/servers/{server}/sites/{site}/enable-ssl', name: 'sites.enable-ssl')]
+    public function enableSsl(Server $server, Site $site): RedirectResponse
+    {
+        $this->authorize('update', [$site, $server]);
+
+        app(EnableSsl::class)->enable($site);
+
+        return back()
+            ->with('success', 'SSL enabled successfully.');
+    }
+
+    #[Post('/servers/{server}/sites/{site}/disable-ssl', name: 'sites.disable-ssl')]
+    public function disableSsl(Server $server, Site $site): RedirectResponse
+    {
+        $this->authorize('update', [$site, $server]);
+
+        app(DisableSsl::class)->disable($site);
+
+        return back()
+            ->with('success', 'SSL disabled successfully.');
     }
 
     #[Get('/servers/{server}/sites/{site}/logs', name: 'sites.logs')]

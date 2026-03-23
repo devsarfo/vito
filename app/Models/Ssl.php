@@ -5,8 +5,10 @@ namespace App\Models;
 use App\Enums\SslStatus;
 use Carbon\Carbon;
 use Database\Factories\SslFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 /**
@@ -27,7 +29,6 @@ use Illuminate\Support\Str;
  * @property array<int, string>|string|null $domains
  * @property int $log_id
  * @property string $email
- * @property bool $is_active
  * @property bool $is_wildcard
  * @property bool $has_csr
  * @property ?string $certificate_path
@@ -55,7 +56,6 @@ class Ssl extends AbstractModel
         'domains',
         'log_id',
         'email',
-        'is_active',
         'is_wildcard',
         'has_csr',
         'certificate_path',
@@ -75,7 +75,6 @@ class Ssl extends AbstractModel
         'expires_at' => 'datetime',
         'domains' => 'array',
         'log_id' => 'integer',
-        'is_active' => 'boolean',
         'is_wildcard' => 'boolean',
         'has_csr' => 'boolean',
         'status' => SslStatus::class,
@@ -103,6 +102,25 @@ class Ssl extends AbstractModel
     public function domain(): BelongsTo
     {
         return $this->belongsTo(Domain::class);
+    }
+
+    /**
+     * @return HasMany<HostedDomain, covariant $this>
+     */
+    public function hostedDomains(): HasMany
+    {
+        return $this->hasMany(HostedDomain::class);
+    }
+
+    /**
+     * @return Builder<Ssl>
+     */
+    public static function activeServerLevel(int $serverId): Builder
+    {
+        return self::query()
+            ->whereNull('site_id')
+            ->where('server_id', $serverId)
+            ->where('status', SslStatus::CREATED);
     }
 
     public function validateSetup(string $result): bool
@@ -133,6 +151,48 @@ class Ssl extends AbstractModel
         $this->save();
 
         return $this->domains;
+    }
+
+    /**
+     * Check if a wildcard domain pattern matches the given domain.
+     *
+     * *.example.com matches sub.example.com
+     * *.example.com does NOT match example.com (bare domain)
+     * *.example.com does NOT match a.b.example.com (nested subdomain)
+     */
+    public static function wildcardMatches(string $pattern, string $domain): bool
+    {
+        if (! str_starts_with($pattern, '*.')) {
+            return false;
+        }
+
+        $parent = substr($pattern, 2);
+        $suffix = '.'.$parent;
+
+        if (! str_ends_with(strtolower($domain), strtolower($suffix))) {
+            return false;
+        }
+
+        $prefix = substr($domain, 0, -strlen($suffix));
+
+        return $prefix !== '' && ! str_contains($prefix, '.');
+    }
+
+    /**
+     * Check if this SSL certificate covers the given domain.
+     */
+    public function coversDomain(string $domain): bool
+    {
+        foreach ($this->getDomains() as $sslDomain) {
+            if (strtolower($sslDomain) === strtolower($domain)) {
+                return true;
+            }
+            if (static::wildcardMatches($sslDomain, $domain)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

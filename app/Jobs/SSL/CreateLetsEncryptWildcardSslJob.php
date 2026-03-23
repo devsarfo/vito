@@ -109,7 +109,7 @@ class CreateLetsEncryptWildcardSslJob implements ShouldQueue
         ])->render();
 
         $pidOutput = trim($ssh->exec($certbotCommand));
-        $pid = (int) $pidOutput;
+        $pid = (int) trim(collect(explode("\n", $pidOutput))->last());
 
         Log::info('[Wildcard SSL] Certbot started', ['pid' => $pid]);
 
@@ -222,7 +222,6 @@ class CreateLetsEncryptWildcardSslJob implements ShouldQueue
         $this->ssl->expires_at = $parsed['expires_at'];
         $this->ssl->domains = $parsed['domains'];
         $this->ssl->status = SslStatus::CREATED;
-        $this->ssl->is_active = true;
         $this->ssl->save();
     }
 
@@ -297,7 +296,7 @@ class CreateLetsEncryptWildcardSslJob implements ShouldQueue
         $elapsed = 0;
 
         while ($elapsed < $maxWait) {
-            $result = trim($ssh->exec("dig +short TXT {$escapedDomain} 2>/dev/null || true"));
+            $result = trim($ssh->exec("dig +short TXT {$escapedDomain} @1.1.1.1 2>/dev/null || true"));
             if (str_contains($result, $validation)) {
                 return;
             }
