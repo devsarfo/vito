@@ -65,6 +65,12 @@ class SourceControlServiceProvider extends ServiceProvider
                     DynamicField::make('url')
                         ->text()
                         ->label('Self hosted URL'),
+                    DynamicField::make('ssh_port')
+                        ->text()
+                        ->label('SSH Port')
+                        ->default(22)
+                        ->placeholder('22')
+                        ->description('Numeric SSH port used when cloning repositories (default: 22).'),
                 ])
             )
             ->register();
@@ -119,6 +125,12 @@ class SourceControlServiceProvider extends ServiceProvider
                     DynamicField::make('url')
                         ->text()
                         ->label('Self hosted URL'),
+                    DynamicField::make('ssh_port')
+                        ->text()
+                        ->label('SSH Port')
+                        ->default(22)
+                        ->placeholder('22')
+                        ->description('Numeric SSH port used when cloning repositories (default: 22).'),
                 ])
             )
             ->register();

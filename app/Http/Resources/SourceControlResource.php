@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\SourceControl;
+use App\SourceControlProviders\SourceControlProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +15,11 @@ class SourceControlResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $handler = config('source-control.providers.'.$this->provider.'.handler');
+        $supportsSshPort = is_string($handler)
+            && is_a($handler, SourceControlProvider::class, true)
+            && in_array('ssh_port', $handler::editableFields(), true);
+
         $data = [
             'id' => $this->id,
             'project_id' => $this->project_id,
@@ -22,6 +28,7 @@ class SourceControlResource extends JsonResource
             'name' => $this->profile,
             'provider' => $this->provider,
             'external_identifier' => $this->external_identifier,
+            'ssh_port' => $this->when($supportsSshPort, fn () => $this->provider()->getSshPort()),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
