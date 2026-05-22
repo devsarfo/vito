@@ -109,8 +109,7 @@ class CreateSite
 
             DB::commit();
 
-            // install site; CheckDomainJob is dispatched from CreateJob after install succeeds
-            dispatch(new CreateJob($site))->onQueue('ssh');
+            dispatch(new CreateJob($site));
 
             return $site;
         } catch (Exception $e) {

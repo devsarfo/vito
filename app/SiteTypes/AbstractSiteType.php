@@ -5,11 +5,13 @@ namespace App\SiteTypes;
 use App\DTOs\SocketEventDTO;
 use App\Events\SocketEvent;
 use App\Exceptions\FailedToDeployGitKey;
+use App\Exceptions\SSHCommandError;
 use App\Exceptions\SSHError;
 use App\Http\Resources\SiteResource;
 use App\Models\Service;
 use App\Models\Site;
 use App\Services\PHP\PHP;
+use App\SSH\OS\Git;
 use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Support\Str;
 use RuntimeException;
@@ -64,9 +66,10 @@ abstract class AbstractSiteType implements SiteType
         return null;
     }
 
-    protected function progress(int $percentage): void
+    protected function progress(int $percentage, ?string $step): void
     {
         $this->site->progress = $percentage;
+        $this->site->progress_step = $step;
         $this->site->save();
 
         SocketEvent::dispatch(new SocketEventDTO(
@@ -83,15 +86,21 @@ abstract class AbstractSiteType implements SiteType
     protected function deployKey(): void
     {
         $os = $this->site->server->os();
-        $os->generateSSHKey($this->site->getSshKeyName(), $this->site);
-        $this->site->ssh_key = $os->readSSHKey($this->site->getSshKeyName(), $this->site);
-        $this->site->save();
-        $keyId = $this->site->sourceControl?->provider()?->deployKey(
-            $this->site->getDeployKeyName(),
-            $this->site->repository,
-            $this->site->ssh_key
-        );
-        $this->site->jsonUpdate('type_data', 'deploy_key_id', $keyId);
+
+        if (! $this->site->ssh_key) {
+            $os->generateSSHKey($this->site->getSshKeyName(), $this->site);
+            $this->site->ssh_key = $os->readSSHKey($this->site->getSshKeyName(), $this->site);
+            $this->site->save();
+        }
+
+        if (empty($this->site->type_data['deploy_key_id'])) {
+            $keyId = $this->site->sourceControl?->provider()?->deployKey(
+                $this->site->getDeployKeyName(),
+                $this->site->repository,
+                $this->site->ssh_key
+            );
+            $this->site->jsonUpdate('type_data', 'deploy_key_id', $keyId);
+        }
     }
 
     /**
@@ -112,7 +121,7 @@ abstract class AbstractSiteType implements SiteType
         }
 
         try {
-            if (! $this->site->userSharedWithSiblings()) {
+            if (! $this->site->userSharedWithSiblings() && ! $this->userExists($this->site->user)) {
                 $this->site->server->os()->createIsolatedUser(
                     $this->site->user,
                     Str::random(15),
@@ -120,20 +129,82 @@ abstract class AbstractSiteType implements SiteType
                 );
             }
 
-            if ($this->site->php_version && ! $this->site->fpmPoolSharedWithSiblings()) {
+            if ($this->site->php_version) {
                 $service = $this->site->php();
                 if (! $service instanceof Service) {
                     throw new RuntimeException('PHP service not found');
                 }
-                /** @var PHP $php */
-                $php = $service->handler();
-                $php->createFpmPool(
-                    $this->site->user,
-                    $this->site->php_version
-                );
+                if (! $this->site->fpmPoolSharedWithSiblings() && ! $this->fpmPoolExists($this->site->user, $this->site->php_version)) {
+                    /** @var PHP $php */
+                    $php = $service->handler();
+                    $php->createFpmPool(
+                        $this->site->user,
+                        $this->site->php_version
+                    );
+                }
             }
         } finally {
             $lock->release();
+        }
+    }
+
+    /**
+     * @throws SSHError
+     */
+    protected function cloneRepository(): void
+    {
+        if ($this->repositoryAlreadyCloned()) {
+            return;
+        }
+        app(Git::class)->clone($this->site);
+    }
+
+    /**
+     * @throws SSHError
+     */
+    protected function userExists(string $user): bool
+    {
+        try {
+            $this->site->server->ssh()->exec(view('ssh.site.check-user-exists', [
+                'user' => $user,
+            ]));
+
+            return true;
+        } catch (SSHCommandError) {
+            return false;
+        }
+    }
+
+    /**
+     * @throws SSHError
+     */
+    protected function repositoryAlreadyCloned(): bool
+    {
+        try {
+            $this->site->server->ssh($this->site->user)->exec(view('ssh.site.check-repository-cloned', [
+                'path' => $this->site->path,
+            ]));
+
+            return true;
+        } catch (SSHCommandError) {
+            return false;
+        }
+    }
+
+    /**
+     * @throws SSHError
+     */
+    protected function fpmPoolExists(string $user, string $version): bool
+    {
+        try {
+            $this->site->server->ssh()->exec(view('ssh.site.check-fpm-pool-exists', [
+                'user' => $user,
+                'version' => $version,
+            ]));
+
+            return true;
+        } catch (SSHCommandError) {
+            return false;
         }
     }
 }

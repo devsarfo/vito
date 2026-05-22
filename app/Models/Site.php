@@ -40,6 +40,8 @@ use RuntimeException;
  * @property SiteStatus $status
  * @property int $port
  * @property int $progress
+ * @property ?string $progress_step
+ * @property ?string $last_error
  * @property string $user
  * @property bool $force_ssl
  * @property bool $ssl_enabled
