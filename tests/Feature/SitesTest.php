@@ -365,6 +365,7 @@ class SitesTest extends TestCase
             'repository' => 'test/test',
             'branch' => 'main',
             'composer' => false,
+            'node_version' => 'none',
             'user' => 'envtest',
             'source_control' => $sourceControl->id,
         ])->assertSessionDoesntHaveErrors();
@@ -875,6 +876,7 @@ class SitesTest extends TestCase
                     'repository' => 'test/test',
                     'branch' => 'main',
                     'composer' => true,
+                    'node_version' => 'none',
                     'user' => 'example',
                 ],
             ],
@@ -922,7 +924,7 @@ class SitesTest extends TestCase
                 [
                     'type' => MiseNodeJS::id(),
                     'domain' => 'example.com',
-                    'node_version' => '20',
+                    'node_version' => '23',
                     'package_manager' => 'npm',
                     'port' => '3000',
                     'repository' => 'test/test',

@@ -466,6 +466,40 @@ class Site extends AbstractModel
             ->exists();
     }
 
+    /**
+     * Returns the version of a mise-managed runtime (e.g. `node`, `bun`) that
+     * is already installed for the given isolated user on the given server, or
+     * `null` if no sibling site has it configured.
+     */
+    public static function existingRuntimeVersionForUser(Server $server, string $user, string $runtime, ?int $excludeSiteId = null): ?string
+    {
+        if ($user === '' || $runtime === '') {
+            return null;
+        }
+
+        $field = $runtime.'_version';
+
+        $query = $server->sites()
+            ->where('user', $user)
+            ->whereNotNull('type_data->'.$field)
+            ->where('type_data->'.$field, '!=', 'none')
+            ->where('type_data->'.$field, '!=', '');
+
+        if ($excludeSiteId !== null) {
+            $query->where('id', '!=', $excludeSiteId);
+        }
+
+        $sibling = $query->orderBy('id')->first();
+
+        if (! $sibling instanceof self) {
+            return null;
+        }
+
+        $version = $sibling->type_data[$field] ?? null;
+
+        return is_string($version) && $version !== '' ? $version : null;
+    }
+
     public function webserver(): Webserver
     {
         /** @var Service $webserver */
