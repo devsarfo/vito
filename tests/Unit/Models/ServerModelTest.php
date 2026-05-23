@@ -5,6 +5,7 @@ namespace Tests\Unit\Models;
 use App\Enums\ServerStatus;
 use App\Facades\SSH;
 use App\Helpers\SSH as SSHHelper;
+use Closure;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use phpseclib3\Net\SSH2;
 use ReflectionProperty;
@@ -69,8 +70,8 @@ class ServerModelTest extends TestCase
         $connection->expects($this->once())
             ->method('exec')
             ->with(
-                $this->isType('string'),
-                $this->isType('callable')
+                $this->isString(),
+                $this->isInstanceOf(Closure::class)
             )
             ->willReturnCallback(function ($command, $callback) use (&$executedCommand) {
                 $executedCommand = $command;
