@@ -2,10 +2,12 @@
 
 namespace App\Services\ProcessManager;
 
+use App\DTOs\ServiceLog;
 use App\Exceptions\SSHError;
+use App\Services\HasLogs;
 use Throwable;
 
-class Supervisor extends AbstractProcessManager
+class Supervisor extends AbstractProcessManager implements HasLogs
 {
     public static function id(): string
     {
@@ -196,5 +198,18 @@ class Supervisor extends AbstractProcessManager
         );
 
         return trim($version);
+    }
+
+    public function logs(): array
+    {
+        return [
+            new ServiceLog(
+                key: 'supervisor:general',
+                serviceLabel: 'Supervisor',
+                label: 'General log',
+                source: ServiceLog::SOURCE_FILE,
+                target: '/var/log/supervisor/supervisord.log',
+            ),
+        ];
     }
 }

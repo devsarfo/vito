@@ -3,13 +3,15 @@
 namespace App\Services\Webserver;
 
 use App\Actions\Webserver\GenerateNginxConfig;
+use App\DTOs\ServiceLog;
 use App\Exceptions\SSHError;
 use App\Exceptions\SSLCreationException;
 use App\Models\Site;
 use App\Models\Ssl;
+use App\Services\HasLogs;
 use Throwable;
 
-class Nginx extends AbstractWebserver
+class Nginx extends AbstractWebserver implements HasLogs
 {
     public static function id(): string
     {
@@ -266,5 +268,25 @@ class Nginx extends AbstractWebserver
         );
 
         return str(trim($version))->before(' ');
+    }
+
+    public function logs(): array
+    {
+        return [
+            new ServiceLog(
+                key: 'nginx:error',
+                serviceLabel: 'NGINX',
+                label: 'Error log',
+                source: ServiceLog::SOURCE_FILE,
+                target: '/var/log/nginx/error.log',
+            ),
+            new ServiceLog(
+                key: 'nginx:access',
+                serviceLabel: 'NGINX',
+                label: 'Access log',
+                source: ServiceLog::SOURCE_FILE,
+                target: '/var/log/nginx/access.log',
+            ),
+        ];
     }
 }
