@@ -2,6 +2,7 @@
 
 namespace App\Services\Webserver;
 
+use App\Actions\Site\EnsureSiteVerificationKey;
 use App\Actions\Webserver\GenerateCaddyConfig;
 use App\DTOs\ServiceLog;
 use App\Enums\SslMethod;
@@ -132,6 +133,8 @@ class Caddy extends AbstractWebserver implements HasLogs
 
     public function generateVhost(Site $site, ?string $template = null): string
     {
+        app(EnsureSiteVerificationKey::class)->ensure($site);
+
         return app(GenerateCaddyConfig::class)->generate($site, $template);
     }
 

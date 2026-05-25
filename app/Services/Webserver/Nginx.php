@@ -2,6 +2,7 @@
 
 namespace App\Services\Webserver;
 
+use App\Actions\Site\EnsureSiteVerificationKey;
 use App\Actions\Webserver\GenerateNginxConfig;
 use App\DTOs\ServiceLog;
 use App\Exceptions\SSHError;
@@ -75,6 +76,8 @@ class Nginx extends AbstractWebserver implements HasLogs
 
     public function generateVhost(Site $site, ?string $template = null): string
     {
+        app(EnsureSiteVerificationKey::class)->ensure($site);
+
         return app(GenerateNginxConfig::class)->generate($site, $template);
     }
 
