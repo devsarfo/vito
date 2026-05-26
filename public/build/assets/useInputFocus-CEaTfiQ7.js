@@ -1,0 +1,1 @@
+import{u as e}from"./app-DlUigsW6.js";var t=e(e=>({isFocused:!1,setFocused:t=>e({isFocused:t})}));export{t};
