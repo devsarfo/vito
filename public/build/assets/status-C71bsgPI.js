@@ -1,0 +1,1 @@
+import{t as e}from"./app-Cf0xZPxl.js";import{t}from"./badge-B5pmj3K8.js";var n=e();function r({server:e}){return(0,n.jsx)(t,{variant:e.status_color,children:e.status})}export{r as default};
