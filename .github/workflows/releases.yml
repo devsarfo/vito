@@ -34,7 +34,7 @@ jobs:
 
     outputs:
       version: ${{ steps.version.outputs.version }}
-      notes: ${{ steps.cleaned-notes.outputs.notes }}
+      notes: ${{ steps.fetch-release.outputs.notes }}
 
     steps:
       - name: Checkout repository
@@ -110,33 +110,69 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.version }}
           name: ${{ steps.version.outputs.version }}
-          body: ${{ steps.cleaned-notes.outputs.notes }}
           target_commitish: ${{ github.ref_name }}
           make_latest: ${{ inputs.latest == 'true' }}
           prerelease: ${{ inputs.prerelease == 'true' }}
           generate_release_notes: true
 
-      - name: Verify GitHub CLI
-        run: gh --version
-
       - name: Get release notes from GitHub API
         id: fetch-release
-        run: |
-          NOTES=$(gh release view ${{ steps.version.outputs.version }} --json body -q .body)
-          echo "notes<<EOF" >> $GITHUB_OUTPUT
-          echo "$NOTES" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Send release notes to Discord
         run: |
-          DISCORD_MESSAGE=$(printf "**VitoDeploy ${{ steps.version.outputs.version }}** is out! 🎉🚀\n\`\`\`\n%s\n\`\`\`" "${{ steps.fetch-release.outputs.notes }}")
-          PAYLOAD=$(jq -n --arg content "$DISCORD_MESSAGE" '{content: $content}')
-          curl -H "Content-Type: application/json" \
-            -X POST \
-            -d "$PAYLOAD" \
-            "$DISCORD_WEBHOOK_URL"
+          NOTES=$(gh release view ${{ steps.version.outputs.version }} --json body -q .body)
+          {
+            echo "notes<<EOF"
+            echo "$NOTES"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Notify Discord
+        continue-on-error: true
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+          REPO: ${{ github.repository }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          if [[ -z "$DISCORD_WEBHOOK_URL" ]]; then
+            echo "DISCORD_WEBHOOK_URL not set, skipping Discord notification"
+            exit 0
+          fi
+          TAG="${VERSION}"
+          NOTES=$(gh release view "$TAG" --repo "$REPO" --json body --jq .body \
+            | sed -E 's# by @[A-Za-z0-9_-]+ in https://github\.com/[^ ]+/pull/[0-9]+##g')
+          if [[ ${#NOTES} -gt 3800 ]]; then
+            NOTES="${NOTES:0:3800}…"
+          fi
+          URL="https://github.com/${REPO}/releases/tag/${TAG}"
+          if [[ "$PRERELEASE" == "true" ]]; then
+            FOOTER="Pre-release channel"
+            COLOR=15844367
+          else
+            FOOTER="Stable channel"
+            COLOR=3066993
+          fi
+          PAYLOAD=$(jq -n \
+            --arg title "VitoDeploy ${TAG} released" \
+            --arg url "$URL" \
+            --arg notes "$NOTES" \
+            --arg footer "$FOOTER" \
+            --argjson color "$COLOR" \
+            '{
+              username: "VitoDeploy Releases",
+              embeds: [{
+                title: $title,
+                url: $url,
+                description: $notes,
+                color: $color,
+                footer: { text: $footer },
+                timestamp: (now | todate)
+              }]
+            }')
+          if ! curl -fsSL -H "Content-Type: application/json" \
+            -X POST -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"; then
+            echo "Discord notification failed; release succeeded regardless"
+          fi
 
