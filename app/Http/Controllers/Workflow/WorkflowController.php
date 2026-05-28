@@ -55,7 +55,7 @@ class WorkflowController extends Controller
 
         return Inertia::render('workflows/show', [
             'workflow' => new WorkflowResource($workflow),
-            'actions' => $workflow->actions(),
+            'actions' => $workflow->getActions(),
         ]);
     }
 

@@ -64,7 +64,7 @@ class Workflow extends Model
     /**
      * @return array<string, mixed>
      */
-    public function actions(): array
+    public function getActions(): array
     {
         $actions = config('workflow.actions', []);
         foreach ($actions as $actionKey => $action) {
