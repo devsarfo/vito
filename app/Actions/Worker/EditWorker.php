@@ -42,6 +42,7 @@ class EditWorker
             'numprocs' => $input['numprocs'],
             'status' => WorkerStatus::RESTARTING,
         ]);
+        $worker->error = null;
         $worker->save();
 
         dispatch(new EditJob($worker))->onQueue('ssh');

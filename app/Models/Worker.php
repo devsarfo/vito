@@ -23,6 +23,7 @@ use Throwable;
  * @property int $redirect_stderr
  * @property string $stdout_logfile
  * @property WorkerStatus $status
+ * @property ?string $error
  * @property string $name
  * @property Server $server
  * @property ?Site $site
@@ -137,8 +138,6 @@ class Worker extends AbstractModel
             return false;
         }
 
-        $bootstrapId = $this->site->type_data['bootstrap_worker_id'] ?? null;
-
-        return $bootstrapId !== null && (int) $bootstrapId === $this->id;
+        return $this->site->bootstrapWorkerId() === $this->id;
     }
 }

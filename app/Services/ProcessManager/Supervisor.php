@@ -149,31 +149,32 @@ class Supervisor extends AbstractProcessManager implements HasLogs
         );
     }
 
+    /**
+     * @param  non-empty-array<int>  $ids
+     *
+     * @throws Throwable
+     */
+    public function restartMany(array $ids, ?int $siteId = null): string
+    {
+        /** @phpstan-ignore identical.alwaysFalse (defensive guard despite non-empty-array contract) */
+        if ($ids === []) {
+            return '';
+        }
+
+        return $this->service->server->ssh()->exec(
+            view('ssh.services.process-manager.supervisor.restart-workers', [
+                'ids' => $ids,
+            ]),
+            'restart-workers',
+            $siteId
+        );
+    }
+
     public function restartAll(?int $siteId = null): void
     {
         $this->service->server->ssh()->exec(
             view('ssh.services.process-manager.supervisor.restart-all-workers'),
             'restart-all-workers',
-            $siteId
-        );
-    }
-
-    /**
-     * @param  array<int>  $workerIds
-     *
-     * @throws Throwable
-     */
-    public function restartByIds(array $workerIds, ?int $siteId = null): void
-    {
-        if (empty($workerIds)) {
-            return;
-        }
-
-        $this->service->server->ssh()->exec(
-            view('ssh.services.process-manager.supervisor.restart-workers', [
-                'workerIds' => $workerIds,
-            ]),
-            'restart-workers',
             $siteId
         );
     }
