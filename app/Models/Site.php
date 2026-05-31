@@ -383,6 +383,11 @@ class Site extends AbstractModel
         return (bool) ($this->type_data['modern_deployment'] ?? false);
     }
 
+    public function statsEnabled(): bool
+    {
+        return ! (bool) ($this->type_data['stats_disabled'] ?? false);
+    }
+
     /**
      * @return HasMany<Worker, covariant $this>
      */

@@ -34,7 +34,6 @@ class SyncCronJobs
             ->where('user', $user)
             ->get();
 
-        // Filter only server-level cronjobs (site_id = null) for status updates
         $serverLevelCronJobs = $vitoCronJobs->where('site_id', null);
 
         if (empty($crontabOutput)) {
@@ -135,7 +134,6 @@ class SyncCronJobs
                     'user' => $user,
                     'command' => $cronJobData['command'],
                     'frequency' => $cronJobData['frequency'],
-                    'hidden' => false,
                     'status' => $cronJobData['commented'] ? CronjobStatus::DISABLED : CronjobStatus::READY,
                 ]);
             }
