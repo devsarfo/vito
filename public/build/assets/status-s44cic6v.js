@@ -1,0 +1,1 @@
+import{o as e}from"./app-DWKom62p.js";import{t}from"./badge-2BYLuB-t.js";var n=e();function r({server:e}){return(0,n.jsx)(t,{variant:e.status_color,children:e.status})}export{r as default};
