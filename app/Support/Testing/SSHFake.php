@@ -23,7 +23,7 @@ class SSHFake extends SSH
 
     protected string $uploadedRemotePath;
 
-    protected string $uploadedContent;
+    protected string $uploadedContent = '';
 
     public function __construct(protected ?string $output = null) {}
 
@@ -158,5 +158,10 @@ class SSHFake extends SSH
     public function getUploadedLocalPath(): string
     {
         return $this->uploadedLocalPath;
+    }
+
+    public function getUploadedContent(): string
+    {
+        return $this->uploadedContent;
     }
 }
