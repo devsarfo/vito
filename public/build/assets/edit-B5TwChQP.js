@@ -1,0 +1,1 @@
+import{o as e}from"./app-CPc83MmO.js";import{a as t}from"./dropdown-menu-bYTQ8V9Y.js";import{t as n}from"./use-dialog-CCdSZ3C5.js";var r=e();function i({serverProvider:e}){let i=n();return(0,r.jsx)(t,{onSelect:()=>i.serverProviderEdit.open({serverProvider:e}),children:`Edit`})}export{i as default};
