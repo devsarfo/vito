@@ -20,6 +20,7 @@ import {
   NetworkIcon,
   RocketIcon,
   Settings2Icon,
+  ShieldIcon,
   SignpostIcon,
   UsersIcon,
   WrenchIcon,
@@ -175,11 +176,25 @@ export default function ServerLayout({ children }: { children: ReactNode }) {
       hidden: !page.props.server.services['php'],
     },
     {
-      title: 'Firewall',
-      href: route('firewall', { server: page.props.server.id }),
-      icon: FlameIcon,
+      title: 'Security',
+      href: route('security', { server: page.props.server.id }),
+      icon: ShieldIcon,
       isDisabled: isMenuDisabled,
-      hidden: !page.props.server.services['firewall'],
+      children: [
+        {
+          title: 'General',
+          href: route('security', { server: page.props.server.id }),
+          onlyActivePath: route('security', { server: page.props.server.id }),
+          icon: ShieldIcon,
+        },
+        {
+          title: 'Firewall',
+          href: route('firewall', { server: page.props.server.id }),
+          onlyActivePath: route('firewall', { server: page.props.server.id }),
+          icon: FlameIcon,
+          hidden: !page.props.server.services['firewall'],
+        },
+      ],
     },
     {
       title: 'Network',
