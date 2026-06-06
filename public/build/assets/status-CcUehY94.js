@@ -1,1 +1,0 @@
-import{o as e}from"./app-CPc83MmO.js";import{t}from"./badge-DvPVt4TD.js";var n=e();function r({server:e}){return(0,n.jsx)(t,{variant:e.status_color,children:e.status})}export{r as default};

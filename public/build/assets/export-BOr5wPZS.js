@@ -1,1 +1,0 @@
-import{t as e}from"./download-2CJhOY55.js";import{o as t}from"./app-CPc83MmO.js";import{t as n}from"./button-CC35f1R9.js";var r=t();function i(){return(0,r.jsxs)(n,{onClick:()=>{window.open(route(`vito-settings.export`),`_blank`)},children:[(0,r.jsx)(e,{}),`Export`]})}export{i as default};

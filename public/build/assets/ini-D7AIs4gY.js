@@ -1,1 +1,0 @@
-import{b as e,o as t}from"./app-CPc83MmO.js";import{a as n}from"./dropdown-menu-bYTQ8V9Y.js";import{t as r}from"./use-dialog-CCdSZ3C5.js";var i=e({default:()=>o}),a=t();function o({service:e,type:t}){let i=r();return(0,a.jsxs)(n,{onSelect:()=>i.phpIni.open({service:e,type:t}),children:[`Edit `,t,` ini`]})}export{i as n,o as t};

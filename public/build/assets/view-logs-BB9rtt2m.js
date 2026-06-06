@@ -1,1 +1,0 @@
-import{b as e,o as t}from"./app-CPc83MmO.js";import{a as n}from"./dropdown-menu-bYTQ8V9Y.js";import{t as r}from"./use-dialog-CCdSZ3C5.js";var i=e({default:()=>o}),a=t();function o({plugin:e}){let t=r();return(0,a.jsx)(n,{onSelect:()=>t.pluginLogs.open({name:e.name??e.folder,errors:e.errors}),children:`View Logs`})}export{i as n,o as t};

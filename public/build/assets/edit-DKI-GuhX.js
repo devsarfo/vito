@@ -1,1 +1,0 @@
-import{o as e}from"./app-CPc83MmO.js";import{a as t}from"./dropdown-menu-bYTQ8V9Y.js";import{t as n}from"./use-dialog-CCdSZ3C5.js";var r=e();function i({dnsProvider:e}){let i=n();return(0,r.jsx)(t,{onSelect:()=>i.dnsProviderEdit.open({dnsProvider:e}),children:`Edit`})}export{i as default};
