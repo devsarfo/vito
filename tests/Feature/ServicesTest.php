@@ -445,12 +445,12 @@ class ServicesTest extends TestCase
             [
                 'mysql',
                 'database',
-                '8.0',
+                '8.4',
             ],
             [
                 'mariadb',
                 'database',
-                '10.4',
+                '10.11',
             ],
             [
                 'postgresql',

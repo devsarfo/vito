@@ -69,8 +69,8 @@ class ServiceTypeServiceProvider extends ServiceProvider
             ->label('MySQL')
             ->handler(Mysql::class)
             ->versions([
+                '9.7',
                 '8.4',
-                '8.0',
             ])
             ->configPaths([
                 [
@@ -90,8 +90,6 @@ class ServiceTypeServiceProvider extends ServiceProvider
                 '16',
                 '15',
                 '14',
-                '13',
-                '12',
             ])
             ->configPaths([
                 [
@@ -106,11 +104,10 @@ class ServiceTypeServiceProvider extends ServiceProvider
             ->label('MariaDB')
             ->handler(Mariadb::class)
             ->versions([
+                '12.3',
+                '11.8',
                 '11.4',
                 '10.11',
-                '10.6',
-                '10.4',
-                '10.3',
             ])
             ->configPaths([
                 [
