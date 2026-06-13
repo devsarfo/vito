@@ -43,6 +43,14 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useSocketListener } from '@/hooks/use-socket-events';
+
+type PlanOption = {
+  label: string;
+  available: boolean;
+};
+
+const normalizePlan = (plan: string | PlanOption): PlanOption => (typeof plan === 'string' ? { label: plan, available: true } : plan);
 
 type CreateServerForm = {
   provider: string;
@@ -306,20 +314,42 @@ export default function CreateServer({
     const serverProviders = await axios.get(route('server-providers.json'));
     setServerProviders(serverProviders.data);
   };
-  const selectProvider = (provider: string) => {
-    form.setData('provider', provider);
-    form.clearErrors();
-    if (provider !== 'custom') {
-      form.setData('server_provider', 0);
-      form.setData('region', '');
-      form.setData('plan', '');
+
+  useEffect(() => {
+    if (open) {
       fetchServerProviders();
     }
-  };
+  }, [open]);
 
-  const selectServerProvider = async (serverProvider: string) => {
-    form.setData('server_provider', parseInt(serverProvider));
-    await fetchRegions(parseInt(serverProvider));
+  useSocketListener((event) => {
+    if (event.type?.startsWith('server-provider.')) {
+      fetchServerProviders();
+    }
+  });
+
+  const providerValue = form.data.provider === 'custom' ? 'custom' : form.data.server_provider ? form.data.server_provider.toString() : '';
+
+  const selectCombinedProvider = async (value: string) => {
+    form.clearErrors();
+    form.setData('region', '');
+    form.setData('plan', '');
+    setRegions({});
+    setPlans({});
+
+    if (value === 'custom') {
+      form.setData('provider', 'custom');
+      form.setData('server_provider', 0);
+      return;
+    }
+
+    const connection = serverProviders.find((item) => item.id.toString() === value);
+    if (!connection) {
+      return;
+    }
+
+    form.setData('provider', connection.provider);
+    form.setData('server_provider', connection.id);
+    await fetchRegions(connection.id);
   };
 
   const [regionOpen, setRegionOpen] = useState(false);
@@ -337,7 +367,7 @@ export default function CreateServer({
     }
   };
 
-  const [plans, setPlans] = useState<{ [key: string]: string }>({});
+  const [plans, setPlans] = useState<{ [key: string]: string | PlanOption }>({});
   const fetchPlans = async (serverProvider: number, region: string) => {
     const plans = await axios.get(route('server-providers.plans', { serverProvider: serverProvider, region: region }));
     setPlans(plans.data);
@@ -365,52 +395,47 @@ export default function CreateServer({
           <FormFields>
             <FormField>
               <Label htmlFor="provider">Provider</Label>
-              <Select value={form.data.provider} onValueChange={(value) => selectProvider(value)}>
-                <SelectTrigger id="provider">
-                  <SelectValue placeholder="Select a provider" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {Object.entries(configs.server_provider.providers).map(([key, provider]) => (
-                      <SelectItem key={key} value={key}>
-                        {provider.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <InputError message={form.errors.provider} />
-            </FormField>
+              <div className="flex items-center gap-2">
+                <Select value={providerValue} onValueChange={selectCombinedProvider}>
+                  <SelectTrigger id="provider" className="flex-1">
+                    <SelectValue placeholder="Select a provider" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="custom">{configs.server_provider.providers.custom?.label ?? 'Custom'}</SelectItem>
+                      {Object.entries(configs.server_provider.providers)
+                        .filter(([key]) => key !== 'custom')
+                        .map(([key, provider]) => {
+                          const connections = serverProviders.filter((item: ServerProvider) => item.provider === key);
 
-            {form.data.provider && form.data.provider !== 'custom' && (
-              <FormField>
-                <Label htmlFor="server-provider">Server provider connection</Label>
-                <div className="flex items-center gap-2">
-                  <Select value={form.data.server_provider.toString()} onValueChange={selectServerProvider}>
-                    <SelectTrigger id="provider">
-                      <SelectValue placeholder="Select a provider" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {serverProviders
-                          .filter((item: ServerProvider) => item.provider === form.data.provider)
-                          .map((provider) => (
-                            <SelectItem key={`server-provider-${provider.id}`} value={provider.id.toString()}>
-                              {provider.name}
+                          if (connections.length === 0) {
+                            return (
+                              <SelectItem key={`provider-${key}`} value={`unavailable-${key}`} disabled>
+                                {provider.label}
+                              </SelectItem>
+                            );
+                          }
+
+                          return connections.map((connection) => (
+                            <SelectItem key={`connection-${connection.id}`} value={connection.id.toString()}>
+                              {provider.label} - {connection.name}
                             </SelectItem>
-                          ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <ConnectServerProvider defaultProvider={form.data.provider} onProviderAdded={fetchServerProviders}>
-                    <Button variant="outline">
-                      <WifiIcon />
-                    </Button>
-                  </ConnectServerProvider>
-                </div>
-                <InputError message={form.errors.server_provider} />
-              </FormField>
-            )}
+                          ));
+                        })}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <ConnectServerProvider
+                  defaultProvider={form.data.provider !== 'custom' ? form.data.provider : undefined}
+                  onProviderAdded={fetchServerProviders}
+                >
+                  <Button type="button" variant="outline" size="icon" aria-label="Add server provider">
+                    <WifiIcon />
+                  </Button>
+                </ConnectServerProvider>
+              </div>
+              <InputError message={form.errors.provider || form.errors.server_provider} />
+            </FormField>
 
             {form.data.provider && form.data.provider !== 'custom' && (
               <div className="grid grid-cols-2 gap-6">
@@ -468,7 +493,7 @@ export default function CreateServer({
                         className="w-full justify-between font-normal"
                         disabled={form.data.region === ''}
                       >
-                        {form.data.plan ? plans[form.data.plan] || form.data.plan : 'Select a plan'}
+                        {form.data.plan ? (plans[form.data.plan] ? normalizePlan(plans[form.data.plan]).label : form.data.plan) : 'Select a plan'}
                         <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
@@ -477,19 +502,24 @@ export default function CreateServer({
                         <CommandInput placeholder="Search plan..." />
                         <CommandList>
                           <CommandGroup>
-                            {Object.entries(plans).map(([key, value]) => (
-                              <CommandItem
-                                key={`plan-${key}`}
-                                value={value}
-                                onSelect={() => {
-                                  selectPlan(key);
-                                  setPlanOpen(false);
-                                }}
-                              >
-                                {value}
-                                <CheckIcon className={cn('ml-auto', form.data.plan === key ? 'opacity-100' : 'opacity-0')} />
-                              </CommandItem>
-                            ))}
+                            {Object.entries(plans).map(([key, value]) => {
+                              const plan = normalizePlan(value);
+                              return (
+                                <CommandItem
+                                  key={`plan-${key}`}
+                                  value={plan.label}
+                                  disabled={!plan.available}
+                                  onSelect={() => {
+                                    selectPlan(key);
+                                    setPlanOpen(false);
+                                  }}
+                                >
+                                  {plan.label}
+                                  {!plan.available && <span className="text-muted-foreground ml-2">(unavailable)</span>}
+                                  <CheckIcon className={cn('ml-auto', form.data.plan === key ? 'opacity-100' : 'opacity-0')} />
+                                </CommandItem>
+                              );
+                            })}
                           </CommandGroup>
                         </CommandList>
                       </Command>
