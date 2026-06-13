@@ -40,7 +40,7 @@ class GetCharsetsTest extends TestCase
     ];
 
     /**
-     * @param  array<string, string|array<string>>  $expected
+     * @param  array<string, array{default: string|null, list: array<int, string>}>  $expected
      */
     #[DataProvider('data')]
     public function test_update_charsets(string $name, string $version, string $output, array $expected): void
@@ -106,6 +106,35 @@ class GetCharsetsTest extends TestCase
                 big5_chinese_ci	big5	1	Yes	Yes	1	PAD SPACE
                 EOD,
                 static::$mysqlCharsets,
+            ],
+            [
+                'mariadb',
+                '11.4',
+                <<<'EOD'
+                Collation	Charset	Id	Default	Compiled	Sortlen
+                big5_chinese_ci	big5	1	Yes	Yes	1
+                big5_bin	big5	84		Yes	1
+                utf8mb4_general_ci	utf8mb4	45		Yes	1
+                utf8mb4_bin	utf8mb4	46		Yes	1
+                uca1400_ai_ci	NULL	NULL	NULL	Yes	8
+                uca1400_ai_cs	NULL	NULL	NULL	Yes	8
+                EOD,
+                [
+                    'big5' => [
+                        'default' => 'big5_chinese_ci',
+                        'list' => [
+                            'big5_chinese_ci',
+                            'big5_bin',
+                        ],
+                    ],
+                    'utf8mb4' => [
+                        'default' => null,
+                        'list' => [
+                            'utf8mb4_general_ci',
+                            'utf8mb4_bin',
+                        ],
+                    ],
+                ],
             ],
             [
                 'postgresql',
