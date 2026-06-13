@@ -8,6 +8,7 @@ use App\Actions\Server\GetServers;
 use App\Actions\Server\RebootServer;
 use App\Actions\Server\TransferServer;
 use App\Actions\Server\Update;
+use App\Actions\Server\UpdateKernel;
 use App\Exceptions\SSHError;
 use App\Http\Resources\ServerLogResource;
 use App\Http\Resources\ServerProviderResource;
@@ -122,7 +123,15 @@ class ServerController extends Controller
 
         $server->checkForUpdates();
 
-        return back()->with('info', 'Available updates: '.$server->refresh()->updates);
+        $server->refresh();
+
+        $message = "Available updates: {$server->updates}";
+
+        if ($server->kernel_updates > 0) {
+            $message .= " (plus {$server->kernel_updates} kernel)";
+        }
+
+        return back()->with('info', $message);
     }
 
     #[Post('/{server}/update', name: 'servers.update')]
@@ -133,6 +142,16 @@ class ServerController extends Controller
         app(Update::class)->update($server);
 
         return back()->with('info', 'Server is being updated. This may take a while.');
+    }
+
+    #[Post('/{server}/update-kernel', name: 'servers.update-kernel')]
+    public function updateKernel(Server $server): RedirectResponse
+    {
+        $this->authorize('update', $server);
+
+        app(UpdateKernel::class)->updateKernel($server);
+
+        return back()->with('info', 'Kernel is being updated and the server will restart.');
     }
 
     #[Post('/{server}/transfer', name: 'servers.transfer')]
