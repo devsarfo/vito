@@ -1,0 +1,1 @@
+import{b as e}from"./app-BN4XpGPL.js";import{a as t}from"./dropdown-menu-D3M7MYPp.js";import{t as n}from"./use-dialog-BTqh45dm.js";var r=e();function i({dnsProvider:e}){let i=n();return(0,r.jsx)(t,{onSelect:()=>i.dnsProviderEdit.open({dnsProvider:e}),children:`Edit`})}export{i as default};

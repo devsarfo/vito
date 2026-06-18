@@ -1,0 +1,1 @@
+import{P as e,b as t}from"./app-BN4XpGPL.js";import{a as n}from"./dropdown-menu-D3M7MYPp.js";import{t as r}from"./use-dialog-BTqh45dm.js";var i=e({default:()=>o}),a=t();function o({service:e,type:t}){let i=r();return(0,a.jsxs)(n,{onSelect:()=>i.phpIni.open({service:e,type:t}),children:[`Edit `,t,` ini`]})}export{i as n,o as t};

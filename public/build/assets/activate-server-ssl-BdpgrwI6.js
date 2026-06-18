@@ -1,0 +1,1 @@
+import{P as e,b as t}from"./app-BN4XpGPL.js";import{a as n}from"./dropdown-menu-D3M7MYPp.js";import{t as r}from"./use-dialog-BTqh45dm.js";var i=e({default:()=>o}),a=t();function o({ssl:e}){let t=r();return(0,a.jsx)(n,{onSelect:()=>t.activateServerSsl.open({serverId:e.server_id,sslId:e.id}),children:`Activate`})}export{i as n,o as t};
