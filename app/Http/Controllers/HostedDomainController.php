@@ -9,6 +9,8 @@ use App\Actions\HostedDomain\DeleteHostedDomain;
 use App\Actions\HostedDomain\ReactivateHostedDomain;
 use App\Actions\HostedDomain\UpdateHostedDomain;
 use App\Actions\SSL\AssignSslToDomains;
+use App\Actions\SSL\CheckSiteSslsExpiry;
+use App\Actions\SSL\CheckSslExpiry;
 use App\Actions\SSL\GetMatchingSslCertificates;
 use App\Actions\SSL\RenewSiteSsl;
 use App\Enums\HostedDomainStatus;
@@ -145,6 +147,53 @@ class HostedDomainController extends Controller
 
         return back()
             ->with('info', 'Renewing site SSL certificate.');
+    }
+
+    #[Post('/{hostedDomain}/check-expiry', name: 'hosted-domains.check-expiry')]
+    public function checkExpiry(Server $server, Site $site, HostedDomain $hostedDomain): RedirectResponse
+    {
+        $this->authorize('update', [$hostedDomain, $site, $server]);
+
+        if ($hostedDomain->ssl === null) {
+            return back()
+                ->with('error', 'This domain does not have an SSL certificate.');
+        }
+
+        try {
+            app(CheckSslExpiry::class)->check($hostedDomain->ssl, notify: false);
+        } catch (ValidationException $e) {
+            return back()
+                ->with('error', $e->getMessage());
+        }
+
+        return back()
+            ->with('success', 'SSL expiry date refreshed.');
+    }
+
+    #[Post('/check-expiry', name: 'hosted-domains.check-expiry-all')]
+    public function checkExpiryAll(Server $server, Site $site): RedirectResponse
+    {
+        $this->authorize('create', [HostedDomain::class, $site, $server]);
+
+        ['checked' => $checked, 'failed' => $failed] = app(CheckSiteSslsExpiry::class)->handle($site);
+
+        if ($checked === 0 && $failed === 0) {
+            return back()
+                ->with('info', 'No SSL certificates to check for this site.');
+        }
+
+        if ($checked === 0) {
+            return back()
+                ->with('error', 'Failed to refresh SSL expiry for all certificates.');
+        }
+
+        if ($failed > 0) {
+            return back()
+                ->with('warning', "Refreshed SSL expiry for {$checked} certificate(s); {$failed} failed.");
+        }
+
+        return back()
+            ->with('success', "Refreshed SSL expiry for {$checked} certificate(s).");
     }
 
     #[Get('/matching-ssls', name: 'hosted-domains.matching-ssls')]
