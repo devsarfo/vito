@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Actions\Backup\ManageBackupFile;
 use App\Actions\Backup\RestoreBackup;
 use App\Actions\Backup\RunBackup;
 use App\Enums\BackupFileStatus;
@@ -10,6 +11,7 @@ use App\Enums\BackupType;
 use App\Enums\DatabaseStatus;
 use App\Enums\ServerStatus;
 use App\Facades\SSH;
+use App\Jobs\Backup\DeleteFileJob;
 use App\Jobs\Backup\RestoreDatabaseJob;
 use App\Models\Backup;
 use App\Models\BackupFile;
@@ -601,6 +603,27 @@ class BackupTest extends TestCase
             'enabled' => false,
             'status' => BackupStatus::DELETING->value,
         ]);
+    }
+
+    public function test_delete_orphaned_backup_file_hard_deletes_without_dispatching_job(): void
+    {
+        Bus::fake();
+
+        $backup = Backup::factory()->create([
+            'type' => BackupType::DATABASE,
+            'server_id' => 999999,
+            'storage_id' => $this->storageProvider->id,
+            'status' => null,
+        ]);
+        $file = BackupFile::factory()->create([
+            'backup_id' => $backup->id,
+            'status' => BackupFileStatus::CREATED,
+        ]);
+
+        app(ManageBackupFile::class)->delete($file);
+
+        $this->assertDatabaseMissing('backup_files', ['id' => $file->id]);
+        Bus::assertNotDispatched(DeleteFileJob::class);
     }
 
     public function test_see_global_backups_list_scoped_to_current_project(): void
