@@ -2,6 +2,7 @@
 
 namespace App\Support\Testing;
 
+use App\Exceptions\SSHCommandError;
 use App\Exceptions\SSHConnectionError;
 use App\Helpers\SSH;
 use App\Models\Server;
@@ -18,6 +19,8 @@ class SSHFake extends SSH
     protected array $commands = [];
 
     protected bool $connectionWillFail = false;
+
+    protected bool $execWillFail = false;
 
     protected string $uploadedLocalPath;
 
@@ -46,6 +49,11 @@ class SSHFake extends SSH
         $this->connectionWillFail = true;
     }
 
+    public function execWillFail(): void
+    {
+        $this->execWillFail = true;
+    }
+
     public function connect(bool $sftp = false): void
     {
         if ($this->connectionWillFail) {
@@ -66,6 +74,10 @@ class SSHFake extends SSH
 
         $this->commands[] = $command;
 
+        if ($this->execWillFail) {
+            throw new SSHCommandError(message: 'SSH command failed with an error', log: $this->log);
+        }
+
         $output = $this->output ?? 'fake output';
         $this->writeOutput($output);
 
@@ -80,7 +92,7 @@ class SSHFake extends SSH
         return $output;
     }
 
-    public function upload(string $local, string $remote, ?string $owner = null, ?string $log = null, ?int $siteId = null): void
+    public function upload(string $local, string $remote, ?string $owner = null, ?string $log = null, ?int $siteId = null, string $permission = '644'): void
     {
         $this->uploadedLocalPath = $local;
         $this->uploadedRemotePath = $remote;

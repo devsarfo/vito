@@ -14,45 +14,51 @@ class UpdateEnv
      * @param  array<string, mixed>  $input
      *
      * @throws SSHError
+     * @throws ValidationException
      */
     public function update(Site $site, array $input): void
     {
         Validator::make($input, [
-            'env' => ['required_without:variables', 'nullable', 'string'],
-            'variables' => ['required_without:env', 'nullable', 'array'],
+            'env' => ['nullable', 'string'],
+            'variables' => ['nullable', 'array', 'min:1'],
             'variables.*.key' => ['required_with:variables', 'string'],
             'variables.*.value' => ['nullable', 'string'],
             'variables.*.is_secret' => ['nullable', 'boolean'],
-            'path' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9\/_.\-]+$/'],
+            'path' => ['nullable', 'string'],
         ])->validate();
 
-        $typeData = $site->type_data ?? [];
-        $path = $input['path'] ?? data_get($typeData, 'env_path', $site->path.'/.env');
+        $hasVariables = array_key_exists('variables', $input)
+            && is_array($input['variables'])
+            && $input['variables'] !== [];
 
-        $storedEnvPath = data_get($typeData, 'env_path');
-        $withinSitePath = str_starts_with($path, $site->path.'/');
-        $matchesStoredPath = $storedEnvPath !== null && $path === $storedEnvPath;
+        $hasEnv = array_key_exists('env', $input)
+            && ($input['env'] !== null || ! array_key_exists('variables', $input));
 
-        if (str_contains($path, '..') || (! $withinSitePath && ! $matchesStoredPath)) {
+        if (! $hasEnv && ! $hasVariables) {
             throw ValidationException::withMessages([
-                'path' => __('The path must be within the site directory.'),
+                'env' => __('Either raw content or variables must be provided.'),
             ]);
         }
 
-        $variables = $this->resolveVariables($site, $input, $path);
+        if ($hasEnv && $hasVariables) {
+            throw ValidationException::withMessages([
+                'env' => __('Provide either raw content or variables, not both.'),
+            ]);
+        }
 
-        $rawSubmission = ! isset($input['variables']) || ! is_array($input['variables']);
+        $path = $site->resolveEnvPath($input['path'] ?? null);
+
+        $variables = $this->resolveVariables($site, $input, $path, $hasVariables);
 
         $site->server->os()->write(
             $path,
-            $rawSubmission ? trim((string) $input['env']) : EnvParser::stringify($variables),
+            $hasVariables ? EnvParser::stringify($variables) : trim((string) ($input['env'] ?? null)),
             $site->user,
         );
 
         $site->env_variables = $this->secretKeys($variables);
+        $site->jsonUpdate('type_data', 'env_path', $path, save: false);
         $site->save();
-
-        $site->jsonUpdate('type_data', 'env_path', $path);
     }
 
     /**
@@ -68,19 +74,20 @@ class UpdateEnv
      *
      * The raw-text path has no per-field secret toggle, so existing secret
      * classifications are carried over and newly introduced keys fall back to
-     * pattern auto-detection. It writes the submitted content verbatim — no
-     * secret restoration is performed, so callers must supply real values.
+     * pattern auto-detection. No secret restoration is performed on that path,
+     * so callers must supply real values.
      *
      * @param  array<string, mixed>  $input
      * @return array<int, array{key: string, value: string, is_secret: bool}>
      *
      * @throws SSHError
+     * @throws ValidationException
      */
-    private function resolveVariables(Site $site, array $input, string $path): array
+    private function resolveVariables(Site $site, array $input, string $path, bool $hasVariables): array
     {
         $secretKeys = array_flip(EnvParser::secretKeys($site->env_variables));
 
-        if (isset($input['variables']) && is_array($input['variables'])) {
+        if ($hasVariables) {
             $live = EnvParser::parse($site->getEnv($path));
 
             $this->guardAgainstWipingSecrets($input['variables'], $live, $secretKeys);
@@ -108,7 +115,7 @@ class UpdateEnv
             $variable['is_secret'] = $variable['is_secret'] || isset($secretKeys[$variable['key']]);
 
             return $variable;
-        }, EnvParser::parse(trim((string) $input['env'])));
+        }, EnvParser::parse(trim((string) ($input['env'] ?? null))));
     }
 
     /**

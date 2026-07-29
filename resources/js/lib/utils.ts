@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// stable client-side id for repeated form rows; crypto.randomUUID needs a secure context
+export function rowId(): string {
+  return typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : Math.random().toString(36).slice(2);
+}
+
 // current absolute URL without its query string or hash, for exact nav-active matching
 export function currentPath(): string {
   return window.location.href.split(/[?#]/)[0];
