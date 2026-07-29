@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// current absolute URL without its query string or hash, for exact nav-active matching
+export function currentPath(): string {
+  return window.location.href.split(/[?#]/)[0];
+}
+
 // convert kb to gb
 export function kbToGb(kb: number | string): number {
   if (typeof kb === 'string') {
@@ -28,6 +33,10 @@ export function formatBytes(bytes: number, decimals = 1): string {
   const units = ['B', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
   return `${(bytes / Math.pow(1024, i)).toFixed(i ? decimals : 0)} ${units[i]}`;
+}
+
+export function truncate(value: string, limit: number): string {
+  return value.length > limit ? `${value.slice(0, limit)}...` : value;
 }
 
 export function formatDateString(dateString: string | Date): string {

@@ -33,6 +33,12 @@ import SiteFeatureAction from '@/pages/site-features/components/feature-action';
 import ServerFeatureAction from '@/pages/server-features/components/feature-action';
 import Fail2banForm from '@/pages/security/components/fail2ban-form';
 import PhpSettingsDialog from '@/pages/site-settings/components/php-settings-dialog';
+import CreateNetwork from '@/pages/networks/components/create-network';
+import AddNetworkServer from '@/pages/networks/components/add-server';
+import EditNetworkServer from '@/pages/networks/components/edit-network-server';
+import NetworkFirewallRuleForm from '@/pages/networks/components/firewall-rule-form';
+import AddNetworkPeer from '@/pages/networks/components/add-peer';
+import PeerConfigDialog from '@/pages/networks/components/peer-config';
 
 export type DialogControlProps = { open: boolean; onOpenChange: (open: boolean) => void };
 
@@ -83,6 +89,12 @@ export const dialogs = {
   serverFeatureAction: ServerFeatureAction,
   fail2banForm: Fail2banForm,
   phpSettings: PhpSettingsDialog,
+  networkCreate: CreateNetwork,
+  networkAddServer: AddNetworkServer,
+  networkEditServer: EditNetworkServer,
+  networkFirewallForm: NetworkFirewallRuleForm,
+  networkAddPeer: AddNetworkPeer,
+  networkPeerConfig: PeerConfigDialog,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as const satisfies Record<string, ComponentType<any>>;
 
