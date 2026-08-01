@@ -127,6 +127,46 @@ test('delete database', function () {
     ]);
 });
 
+test('delete database keeps linked user databases a list', function () {
+    $this->actingAs($this->user);
+
+    SSH::fake();
+
+    foreach (['db_one', 'db_two', 'db_three'] as $name) {
+        Database::factory()->create([
+            'server_id' => $this->server->id,
+            'name' => $name,
+        ]);
+    }
+
+    /** @var DatabaseUser $databaseUser */
+    $databaseUser = DatabaseUser::factory()->create([
+        'server_id' => $this->server->id,
+        'databases' => ['db_one', 'db_two', 'db_three'],
+    ]);
+
+    /** @var Database $middle */
+    $middle = Database::query()->where('name', 'db_two')->firstOrFail();
+
+    $this->delete(route('databases.destroy', [
+        'server' => $this->server,
+        'database' => $middle,
+    ]))->assertSessionDoesntHaveErrors();
+
+    $databaseUser->refresh();
+
+    expect($databaseUser->databases)->toBe(['db_one', 'db_three']);
+    expect(json_encode($databaseUser->databases))->toBe('["db_one","db_three"]');
+
+    $this->get(route('database-users', $this->server))
+        ->assertSuccessful()
+        ->assertInertia(function (AssertableInertia $page): void {
+            $rows = $page->toArray()['props']['databaseUsers']['data'];
+
+            expect(json_encode($rows[0]['databases']))->toBe('["db_one","db_three"]');
+        });
+});
+
 test('sync databases', function () {
     $this->actingAs($this->user);
 
